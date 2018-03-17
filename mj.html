@@ -1,0 +1,75 @@
+<html>
+<head>
+	<title>Move&ampJump</title>
+	<meta charset="UTF-8">
+	<meta name="author" content="María Iñigo, David Lopez, Andres Gomez, Maria Ortega">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style type="text/css" media="screen">@import 'mj.css';</style>
+	<script type="text/javascript" src="logica.js"></script>
+</head>
+<body>
+	
+<!--MENU-->
+  <nav id="">
+    <div class="menu">
+      <span id="desplegable"><i class="fa fa-dot-circle-o" style="color:#FFFFFF; font-size:100;"></i></span>
+      <div class="menu-contenido"> 
+        <a onclick="DisplayMain()"><i class="fa fa-home"></i> PAGINA PRINCIPAL</span>
+        <a onclick="DisplayGame()"><i class="fa fa-cubes"></i> JUEGO</span>
+        <a onclick="DisplayDraw()"><i class="fa fa-paint-brush"></i> DIBUJA TU PERSONAJE</span>
+      </div>
+    </div>
+  </nav>
+
+  <!--
+    <nav id="contenedor">
+    <div class="menu">
+      <span id="desplegable"><i class="fa fa-dot-circle-o" style="color:#FFFFFF; font-size:100;"></i></span>
+      <div class="menu-contenido"> 
+        <span class="opcion-elegida"><i class="fa fa-home"></i> PAGINA PRINCIPAL</span>
+       <span class="opcion"><i class="fa fa-cubes"></i> JUEGO</span>
+       <span class="opcion"><i class="fa fa-paint-brush"></i> DIBUJA TU PERSONAJE</span>
+      </div>
+    </div>
+  </nav>
+-->
+
+<!--PAGINA PRINCIPAL-->
+  <section id="Principal">
+    <header>
+      <h1>MOVE &amp JUMP</h1>
+    </header>
+  </section>
+
+<!--VIDEO FONDO JUEGO-->
+  <section id="Juego">
+    <div id="vd_container">
+      <video id="mivideo"s autoplay loop width="700" height="700">
+        <source src="videoplayback.mp4" type="video/mp4"></source>
+      </video>
+    </div>
+    <div id="content">
+      <canvas id="micanvas" width="900" height="900"></canvas>
+    </div>
+  </section>
+
+<!--DIBUJO-->
+  <section id="Dibujo">
+    <table>
+      <tr>
+        
+        <td><canvas id="micanvas2" height="200" width="300"/></td>
+        <td class="herramientas"><!--aqui vamos a colocar las herramientas para poder escribir-->
+          <input type="button" id="guardar" value="JUGAR CON MI DIBUJO">
+          <img src="lapiz.jpg" id="lapiz" width="50" height="50"/><br/><br/>
+          <img src="goma.jpg" id="goma" width="50" height="50"/><br/><br/>
+          <input type="color" id="colores"><!--esto para elegir color--><br/><br/>
+          
+        </td>
+      </tr>
+    </table>
+  </section>
+
+
+</body>
+</html>
