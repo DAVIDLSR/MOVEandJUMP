@@ -1,0 +1,24 @@
+<html>
+<head>
+	<style type="text/css" media="screen">
+		@import 'Estilo.css';
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="Logica.js"></script>
+</head>
+<body>
+<div id="vd_container" width="940px">
+	<video id="mivideo" autoplay loop>
+    <source src="videoplayback.mp4" type="video/mp4"></source>
+</video>
+</div>
+<div id="content">
+	<canvas id="micanvas"></canvas>	
+</div>
+<div id="div_pause">
+	<button id="button_play" onclick="renaudar_video()"></button>
+	<button id="button_pause" onclick="parar_video()"></button>
+	<button id="button_refresh_1"></button>
+	<button id="button_refresh_2"></button>
+</div>
+</body>
