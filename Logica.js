@@ -22,15 +22,19 @@ window.onload = function(){
 }
 var init = function(){
 	console.log(window.window.innerWidth);
-	document.getElementById("Principal").style.display = "block";
-	document.getElementById("Juego").style.display = "none";
-	document.getElementById("Dibujo").style.display = "none";
-	/*var menu=document.getElementById("menu");
-	opciones=menu.getElementByTagName("span");
-	secciones=document.getElementByTagName("section");
-	for(var i=0;i<opciones.lenght;i++){
-		opciones[i].addEventListener("click",cambioPagina);
-	}*/
+	//estos dos arrays nos sirven para poder cambiar de pestañas cuando pulsemos los diferentes elementos del menu
+	select = [];
+	elem=[];
+	for(var i=0;i<3;i++){
+		select.push(document.getElementsByTagName('section')[i]);
+	}
+	for(var j=0;j<3;j++){
+		elem.push(document.getElementsByTagName('a')[j]);
+		elem[j].onclick=function(evt){
+			cambiarPag(evt.target);
+		}
+	}
+	
 	canvas = document.getElementById("micanvas");
 	vid = document.getElementById("mivideo");
 	if(canvas && canvas.getContext){
@@ -42,43 +46,34 @@ var init = function(){
 		interval = setInterval(monigote1.repintar_monigote,10);	
 	}
 }
-//DOM
-function DisplayMain() {
-		console.log('esto es el main');
-	    document.getElementById("Principal").style.display = "block";
-	    document.getElementById("Juego").style.display = "none";
-	    document.getElementById("Dibujo").style.display = "none";
-	}
 
-	function DisplayGame() {
-		console.log('esto es el Juego');
-		document.getElementById("Principal").style.display = "none";
-	    document.getElementById("Juego").style.display = "block";
-	    document.getElementById("Dibujo").style.display = "none";
-	}
-
-	function DisplayDraw() {
-		console.log('esto es el dibujo');
-		document.getElementById("Principal").style.display = "none";
-	    document.getElementById("Juego").style.display = "none";
-	    document.getElementById("Dibujo").style.display = "block";
-	}
-
-	/*
-	function cambioPagina(){
-	for(var i=0;i<opciones.lenght;i++){
-		var opcion=opciones[i].classList;
-		var seccion=secciones[i].classList;
-		if(opciones[i]==this){
-			opcion.add("opcion-elegida");
-			seccion.add("seccion-abierta");
-		}else{
-			opcion.remove("opcion-elegida");
-			seccion.remove("seccion-abierta");
-		}
-	}
+function cambiarPag(activo){
+	 for(var i=0;i<elem.length;i++){//con este bucle detectamos los que hemos pulsado y los que no
+        if(activo==elem[i]){
+            var eleccion=i;
+            console.log(eleccion);
+        }else{
+            var noelec=[];
+            noelec.push(i);
+            var noseleccionado=select[noelec].classList;
+            //los que no hemos pulsado los hacemos invisibles
+            if(noseleccionado.contains('visible')){
+                noseleccionado.remove('visible');
+            }
+            if(!noseleccionado.contains('invisible')){
+                noseleccionado.add('invisible');
+            }
+        }
+    }
+     var seleccionado= select[eleccion].classList;
+    //hacemos visible el que hayamos pulsado
+    if(seleccionado.contains('invisible')){
+        seleccionado.remove('invisible');
+    }
+    seleccionado.add('visible');
 }
-*/
+
+	
 //DIBUJO
 
 function dibujar(event){
