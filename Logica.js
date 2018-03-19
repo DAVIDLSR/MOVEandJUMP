@@ -9,8 +9,8 @@ window.onload = function(){
 	cogergoma=false;//para cuando cojamos el lapiz actualizar el color
 	guardar_imagen=false;
 	canvas2=document.getElementById('micanvas2');
-	canvas2.onmousemove=dibujar;
 	canvas2.onmousedown=activar;
+	canvas2.onmousemove=dibujar;
 	canvas2.onmouseup=desactivar;
 	goma=document.getElementById('goma');
 	goma.onclick=borrador;
@@ -79,8 +79,10 @@ function cambiarPag(activo){
 function dibujar(event){
 	if(canvas2 && canvas2.getContext){
 		var ctx2=canvas2.getContext('2d');
-		var x=event.clientX;//sirve para coger la coordenada x del raton
-		var y=event.clientY;
+		var posx=event.clientX -100;//sirve para coger la coordenada x del raton
+		var posy=event.clientY-250;
+		console.log(canvas2.getAttribute("width"));
+		console.log(canvas2.getAttribute("height"));
 		if(pintura==true){
 			if(cogergoma==false){
 				color=document.getElementById('colores').value;
@@ -88,7 +90,7 @@ function dibujar(event){
 				console.log('vamos a pintar')
 				ctx2.fillStyle=color;
 				ctx2.beginPath();
-				ctx2.fillRect(x,y,tamaño,tamaño);//vamos pintando un rect(linea ancha) donde esta el raton
+				ctx2.fillRect(posx,posy,tamaño,tamaño);//vamos pintando un rect(linea ancha) donde esta el raton
 				if(pintura==false){
 					ctx2.closePath();
 					ctx2.stroke();
@@ -96,7 +98,7 @@ function dibujar(event){
 
 			}else{//if cogergoma==true queremos que nos borre el camino, no que nos lo pinte en blanco
 				console.log('cogemos la goma');
-				ctx2.clearRect(x,y,tamaño,tamaño);
+				ctx2.clearRect(posx,posy,tamaño,tamaño);
 			}
 		}
 	}
