@@ -38,14 +38,12 @@
 #div_pause {
 	/*background-color: green;*/
 	position:fixed;
-	height: 86%;
-	width: 70%;
-	margin-left: 15%;
-	margin-top: 3%;
+	height: 100%;
+	width: 100%;
 }
 #button_play {
-	margin-top: 20%;
-	margin-left: 30%;
+	margin-top: 18%;
+	margin-left: 35%;
 	min-height: 20%;
 	min-width: 11%;
 	background-image: url("logo_play_3.png");
@@ -57,13 +55,36 @@
 }
 
 #button_pause {
-	margin-top: 0.5%;
-	margin-left: 3%;
-	min-height: 20%;
-	min-width: 11%;
+	margin-top: 4%;
+	margin-left: 15%;
+	min-height: 10%;
+	min-width: 5%;
 	background-image: url("logo_pause.png");
 	background-color: transparent;
+	border-color: transparent;
+	background-position: center;
+	background-size: 40px 40px;
+	background-repeat: no-repeat;
+}
+#button_refresh_1 {
+	margin-top: 20%;
+	margin-left: 3%;
+	min-height: 20%;
+	min-width: 10%;
+	background-image: url("logo_refresh.png");
+	background-color: transparent;
 	border-color: transparent;;
+	background-position: center;
+	background-size: 120px 120px;
+	background-repeat: no-repeat;
+}
+#button_refresh_2 {
+	margin-top: 0.5%;
+	min-height: 10%;
+	min-width: 5%;
+	background-image: url("logo_refresh.png");
+	background-color: transparent;
+	border-color: transparent;
 	background-position: center;
 	background-size: 50px 50px;
 	background-repeat: no-repeat;
