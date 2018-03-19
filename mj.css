@@ -107,6 +107,6 @@ header{
 }
 #dibujocanvas{
     position:absolute;
-    top:50%;
-    right:50%;
+    top:250;
+    left:100;
 }
