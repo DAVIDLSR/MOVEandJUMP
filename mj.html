@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style type="text/css" media="screen">@import 'mj.css';</style>
 	<script type="text/javascript" src="logica.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
 </head>
 <body>
 	
@@ -31,30 +33,34 @@
 
 <!--VIDEO FONDO JUEGO-->
   <section id="Juego" class="invisible">
-    <div id="vd_container">
-      <video id="mivideo"s autoplay loop width="700" height="700">
+    <div id="vd_container" width="940px">
+      <video id="mivideo" autoplay loop>
         <source src="videoplayback.mp4" type="video/mp4"></source>
       </video>
     </div>
     <div id="content">
-      <canvas id="micanvas" width="900" height="900"></canvas>
+      <canvas id="micanvas"></canvas> 
+    </div>
+    <div id="div_pause">
+      <button id="button_play" onclick="renaudar_video()"></button>
+      <button id="button_pause" onclick="parar_video()"></button>
+      <button id="button_refresh_1"></button>
+      <button id="button_refresh_2"></button>
     </div>
   </section>
 
 <!--DIBUJO-->
   <section id="Dibujo" class="invisible">
-    <table id="dibujocanvas">
-      <tr>
-        <td><canvas id="micanvas2" height="200" width="300"/></td>
-        <td class="herramientas"><!--aqui vamos a colocar las herramientas para poder escribir-->
-          <input type="button" id="guardar" value="JUGAR CON MI DIBUJO">
-          <img src="lapiz.jpg" id="lapiz" width="50" height="50"/><br/><br/>
-          <img src="goma.jpg" id="goma" width="50" height="50"/><br/><br/>
-          <input type="color" id="colores"><!--esto para elegir color--><br/><br/>
-          
-        </td>
-      </tr>
-    </table>
+    <div id="dibujocanvas">
+      <p>DIBUJA TU PERSONAJE EN ESTE CUADRO</p>
+      <div class="herramientas"><!--aqui vamos a colocar las herramientas para poder escribir-->
+        <img src="lapiz.jpg" id="lapiz" width="50" height="50"/><br><br>
+        <img src="goma.jpg" id="goma" width="50" height="50"/><br><br>
+         <input type="color" id="colores"><!--esto para elegir color--> <br><br>
+        <input type="button" id="guardar" value="JUGAR CON MI DIBUJO">
+      </div>
+      <canvas id="micanvas2" height="200" width="300"/>
+    </div>
   </section>
 
 
