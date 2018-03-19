@@ -5,7 +5,6 @@ body{
  	background-attachment: fixed;
  	background-size: cover;
  	color:white;
-}
 /**************************** PRINCIPAL ****************************/
 header{
     font-size:60pt;
@@ -47,7 +46,182 @@ header{
   height: 100%;
 }
 
+/****************************** MENU ******************************/body{
+	background-image: url('background.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+ 	background-attachment: fixed;
+ 	background-size: cover;
+ 	color:white;
+}
+/**************************** PRINCIPAL ****************************/
+header{
+    font-size:60pt;
+    color:white;
+    position: absolute;
+    top:30%;
+    right:15%;
+}
+/***************************** JUEGO *****************************/
+#vd_container{
+    /*background-color: grey;*/
+    top: 100;
+    position:fixed;
+    height: 528px;
+    width: 940px;
+    overflow:hidden;
+    padding-left: 15%;
+    padding-right: 15%;
+    z-index: -20;
+}
+#mivideo{
+    height: 528px;
+    width: 940px;
+    /*min-width: 100%;/*Defines the minimum width in percent of the containing block, en este caso, 600x900*/
+   /* min-height: 100%;
+    /*width: 100%;
+    height: 100%;*/
+}
+#content{
+    top: 100;
+    position:fixed;
+    height: 528px;
+    width: 940px;
+    overflow:hidden;
+    padding-left: 15%;
+    padding-right: 15%;
+    z-index: -10;
+}
+#micanvas {
+    min-width: 40%;/*Defines the minimum width in percent of the containing block, en este caso, 600x900*/
+    min-height: 87.5%;
+    width: 940;
+    height: 90%;
+    margin-top: 4.5%;
+}
+#div_pause {
+    position:fixed;
+    top: 100px;
+    height: 528px;
+    width: 100%;
+}
+#button_play {
+    margin-top: 18%;
+    margin-left: 35%;
+    min-height: 20%;
+    min-width: 11%;
+    background-image: url("logo_play_3.png");
+    background-color: transparent;
+    border-color: transparent;;
+    background-position: center;
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+}
+
+#button_pause {
+    margin-top: 4%;
+    margin-left: 15%;
+    min-height: 10%;
+    min-width: 5%;
+    background-image: url("logo_pause.png");
+    background-color: transparent;
+    border-color: transparent;
+    background-position: center;
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+}
+#button_refresh_1 {
+    margin-top: 20%;
+    margin-left: 3%;
+    min-height: 20%;
+    min-width: 10%;
+    background-image: url("logo_refresh.png");
+    background-color: transparent;
+    border-color: transparent;;
+    background-position: center;
+    background-size: 120px 120px;
+    background-repeat: no-repeat;
+}
+#button_refresh_2 {
+    margin-top: 0.5%;
+    min-height: 10%;
+    min-width: 5%;
+    background-image: url("logo_refresh.png");
+    background-color: transparent;
+    border-color: transparent;
+    background-position: center;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+}
+
 /****************************** MENU ******************************/
+#contenedor{
+    width: 1000px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.desplegable { 
+    color:#FFFF00;
+    padding:16px;
+    cursor: pointer;
+    display:block;
+    margin:auto;
+}
+.menu {
+    display:block;
+    margin:auto;
+}
+.menu-contenido {
+    display: none;
+    background-color: black; 
+    padding:12px 16px;
+}
+.menu-contenido a {
+    color:white;
+    padding:12px 16px;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.menu-contenido a:hover {
+    background-color:black;
+    margin-left: auto;
+    margin-right: auto;
+}
+.menu:hover .menu-contenido {
+    display:block;
+}
+.menu:hover .boton { 
+    color:black;
+ }
+.menu:hover .dropdown {
+    background-color:black;
+}
+.visible{
+    display:block;
+}
+.invisible{
+    display:none;
+}
+/****************************** DIBUJO ******************************/
+#micanvas2{
+    border:solid;
+    background-color: white;
+}
+.herramientas {
+    position: fixed;
+    left: 650;
+    top:250;
+}
+#dibujocanvas{
+    position:fixed;
+    top:250;
+    left:300;
+}
+#dibujocanvas p{
+    color:white;
+}
 #contenedor{
     width: 960px;
     height: 100%;
