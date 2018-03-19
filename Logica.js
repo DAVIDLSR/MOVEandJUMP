@@ -191,9 +191,14 @@ var monigote = function(){
 	this.dy = 3;
 	
 	this.pintar_monigote = function(){
-		ctx.fillStyle = "orange"
-		ctx.fillRect(this.x,this.y,this.anchura,this.altura);
-		ctx.fill();
+		if(guardar_imagen==false){
+			ctx.fillStyle = "orange"
+			ctx.fillRect(this.x,this.y,this.anchura,this.altura);
+			ctx.fill();
+		}else{
+			ctx.drawImage(image,0,0,canvas2.getAttribute('width'),canvas2.getAttribute('height'), this.x,this.y,this.anchura,this.altura);
+		}
+		
 	}
 	this.saltar_monigote = function(){
 		if(this.y>50 && sube_salto==true){
