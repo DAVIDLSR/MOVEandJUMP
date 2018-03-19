@@ -10,39 +10,27 @@
 <body>
 	
 <!--MENU-->
-  <nav id="">
-    <div class="menu">
-      <span id="desplegable"><i class="fa fa-dot-circle-o" style="color:#FFFFFF; font-size:100;"></i></span>
-      <div class="menu-contenido"> 
-        <a onclick="DisplayMain()"><i class="fa fa-home"></i> PAGINA PRINCIPAL</span>
-        <a onclick="DisplayGame()"><i class="fa fa-cubes"></i> JUEGO</span>
-        <a onclick="DisplayDraw()"><i class="fa fa-paint-brush"></i> DIBUJA TU PERSONAJE</span>
-      </div>
+<nav id="contenedor">
+  <div class="menu">
+    <span id="desplegable"><i class="fa fa-dot-circle-o" style="color:#FFFFFF; font-size:100;"></i></span>
+    <div class="menu-contenido"> 
+      <a value="0"><i class="fa fa-home"></i>PAGINA PRINCIPAL</a>
+      <a value="1"><i class="fa fa-cubes"></i> JUEGO </a>
+      <a value="2"><i class="fa fa-paint-brush"></i> DIBUJA TU PERSONAJE</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!--
-    <nav id="contenedor">
-    <div class="menu">
-      <span id="desplegable"><i class="fa fa-dot-circle-o" style="color:#FFFFFF; font-size:100;"></i></span>
-      <div class="menu-contenido"> 
-        <span class="opcion-elegida"><i class="fa fa-home"></i> PAGINA PRINCIPAL</span>
-       <span class="opcion"><i class="fa fa-cubes"></i> JUEGO</span>
-       <span class="opcion"><i class="fa fa-paint-brush"></i> DIBUJA TU PERSONAJE</span>
-      </div>
-    </div>
-  </nav>
--->
 
 <!--PAGINA PRINCIPAL-->
-  <section id="Principal">
+  <section id="Principal" class="visible">
     <header>
       <h1>MOVE &amp JUMP</h1>
     </header>
   </section>
 
 <!--VIDEO FONDO JUEGO-->
-  <section id="Juego">
+  <section id="Juego" class="invisible">
     <div id="vd_container">
       <video id="mivideo"s autoplay loop width="700" height="700">
         <source src="videoplayback.mp4" type="video/mp4"></source>
@@ -54,10 +42,9 @@
   </section>
 
 <!--DIBUJO-->
-  <section id="Dibujo">
-    <table>
+  <section id="Dibujo" class="invisible">
+    <table id="dibujocanvas">
       <tr>
-        
         <td><canvas id="micanvas2" height="200" width="300"/></td>
         <td class="herramientas"><!--aqui vamos a colocar las herramientas para poder escribir-->
           <input type="button" id="guardar" value="JUGAR CON MI DIBUJO">
