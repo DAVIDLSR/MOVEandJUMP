@@ -1,8 +1,11 @@
 window.onload = function(){
+	//JUEGO
 	sube_salto = false;
 	baja_salto = false;
 	izquierda = false;
 	derecha = false;
+	video_run = true;
+	//DIBUJAR
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
 	tamaño=10;
 	pintura=false;
@@ -22,7 +25,7 @@ window.onload = function(){
 }
 var init = function(){
 	console.log(window.window.innerWidth);
-	//estos dos arrays nos sirven para poder cambiar de pestañas cuando pulsemos los diferentes elementos del menu
+	//CAMBIO DE PESTAÑAS
 	select = [];
 	elem=[];
 	for(var i=0;i<3;i++){
@@ -34,16 +37,17 @@ var init = function(){
 			cambiarPag(evt.target);
 		}
 	}
-	
+	//JUEGO
 	canvas = document.getElementById("micanvas");
-	vid = document.getElementById("mivideo");
+	contenedor_canvas = document.getElementById("vd_container");
+	video = document.getElementById("mivideo");
+	contenedor_boton_pause = document.getElementById("div_pause");
 	if(canvas && canvas.getContext){
 		monigote1 = new monigote();
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
-		var video = document.getElementById("mivideo");
-		interval = setInterval(monigote1.repintar_monigote,10);	
+		interval_1 = setInterval(repintar,10);
 	}
 }
 
@@ -79,8 +83,8 @@ function cambiarPag(activo){
 function dibujar(event){
 	if(canvas2 && canvas2.getContext){
 		var ctx2=canvas2.getContext('2d');
-		var posx=event.clientX -100;//sirve para coger la coordenada x del raton
-		var posy=event.clientY-250;
+		var posx=event.clientX -300;//sirve para coger la coordenada x del raton
+		var posy=event.clientY-310;
 		console.log(canvas2.getAttribute("width"));
 		console.log(canvas2.getAttribute("height"));
 		if(pintura==true){
@@ -160,34 +164,53 @@ var movimiento_key_down = function(event){
 		derecha = true;
 		izquierda = false;
 	}
+	//Parar Video
+	if(keyCode==32 && video_run==true){
+		parar_video();
+		keyCode=null;
+	}
+	//Renaudar Video
+	if(keyCode==32 && video_run==false){
+		renaudar_video();
+		keyCode=null;
+	}
+}
+var rectangulo_base = function(){
+	ctx.fillStyle="DarkSlateBlue"
+	ctx.fillRect(0,110,1000,10);
+	ctx.fill();
 }
 
 var monigote = function(){
-	this.x = 100;
-	this.y = 380;
-	this.dx = 5;
-	this.dy = 5;
 	
-
-	this.rectangulo_base = function(){
-		ctx.fillStyle="DarkSlateBlue"
-		ctx.fillRect(0,420,1000,35);
+	this.altura = 12;
+	this.anchura = 12;
+	this.x = 20;
+	this.y = 110-this.altura;
+	this.dx = 3;
+	this.dy = 3;
+	
+	this.pintar_monigote = function(){
+		ctx.fillStyle = "orange"
+		ctx.fillRect(this.x,this.y,this.anchura,this.altura);
 		ctx.fill();
 	}
 	this.saltar_monigote = function(){
-		if(this.y>200 && sube_salto==true){
-			this.y = this.y - this.dy;
+		if(this.y>50 && sube_salto==true){
+			console.log("subir");
+			this.y = this.y - this.dy/2;
 			sube_salto = true;
 			baja_salto = false;
 		}			
 		else{
-			if(this.y<=250||baja_salto==true){
-				if(this.y<380){
-					this.y = this.y + this.dy;
+			if(this.y<=(100-this.altura)||baja_salto==true){
+				console.log("bajar");		
+				if(this.y<(100-this.altura)){
+					this.y = this.y + this.dy/2;
 						baja_salto = true;
 						sube_salto = false;
 				}else{
-					this.y = 380;
+					this.y = 110-this.altura;
 					baja_salto = false;
 				}				
 			}	  	
@@ -197,24 +220,54 @@ var monigote = function(){
 		if(izquierda==true && (monigote1.x)>0){
 			this.x = this.x - this.dx/2;
 		}
-		if(derecha==true && (this.x+40)<canvas.getAttribute("width")){
+		if(derecha==true && (this.x+this.anchura)<300){
 			this.x = this.x + this.dx/2;
 		}
 	}
-	this.pintar_monigote = function(){
-		if(guardar_imagen==false){
-			ctx.fillStyle = "orange"
-			ctx.fillRect(this.x,this.y,40,40);
-			ctx.fill();
-		}else{
-			ctx.drawImage(image,0,0,canvas2.getAttribute('width'),canvas2.getAttribute('height'), this.x,this.y,40, 40);
-		}
+}
+var repintar = function(){
+	ctx.clearRect(0,0,8000, 8000);
+	rectangulo_base();
+	monigote1.movimiento_lateral();
+	monigote1.saltar_monigote();
+	monigote1.pintar_monigote();
+	boton_pause();
+}
+var renaudar_video = function(){
+	console.log("play_video");
+	video.play();
+	video_run=true;
+	interval_1 = setInterval(repintar,10);	
+	boton_pause();
+}
+var parar_video = function(){
+	console.log("onkeydown");
+	console.log(contenedor_boton_pause);
+	cargarDiv(contenedor_boton_pause,"Nuevo_Usuario.html");
+	video.pause();
+	video_run=false;
+	clearInterval(interval_1);
+	boton_pause();		
+}
+var boton_pause = function(){
+	var boton_play = document.getElementById("button_play");
+	var boton_pause = document.getElementById("button_pause");
+	var boton_refresh_1 = document.getElementById("button_refresh_1");
+	var boton_refresh_2 = document.getElementById("button_refresh_2");
+	if(video_run==true){
+		boton_play.style.display = "none";
+		boton_refresh_1.style.display = "none";
+		boton_refresh_2.style.display = "initial";
+		boton_pause.style.display = "initial";
 	}
-	this.repintar_monigote = function(){
-		ctx.clearRect(0,0,canvas.getAttribute("width"), canvas.getAttribute("height"));
-		monigote1.rectangulo_base();
-		monigote1.movimiento_lateral();
-		monigote1.saltar_monigote();
-		monigote1.pintar_monigote();
-	}
+	if(video_run==false){
+		boton_play.style.display = "initial";
+		boton_refresh_1.style.display = "initial";
+		boton_refresh_2.style.display = "none";
+		boton_pause.style.display = "none";
+	}	
+}
+function cargarDiv(div,url)
+{
+      $(div).load(url);
 }
