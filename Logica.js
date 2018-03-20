@@ -54,12 +54,12 @@ var init = function(){
 function cambiarPag(activo){
 	 for(var i=0;i<elem.length;i++){//con este bucle detectamos los que hemos pulsado y los que no
         if(activo==elem[i]){
-            var eleccion=i;
+            eleccion=i;
             console.log(eleccion);
         }else{
-            var noelec=[];
+            noelec=[];
             noelec.push(i);
-            var noseleccionado=select[noelec].classList;
+            noseleccionado=select[noelec].classList;
             //los que no hemos pulsado los hacemos invisibles
             if(noseleccionado.contains('visible')){
                 noseleccionado.remove('visible');
@@ -69,7 +69,7 @@ function cambiarPag(activo){
             }
         }
     }
-     var seleccionado= select[eleccion].classList;
+    seleccionado= select[eleccion].classList;
     //hacemos visible el que hayamos pulsado
     if(seleccionado.contains('invisible')){
         seleccionado.remove('invisible');
@@ -126,13 +126,16 @@ function guardar(){
 	if(canvas2 && canvas2.getContext){
 		ctx2=canvas2.getContext('2d');
 		image = new Image();
-		//image.id = "pic"
 		image.src = canvas2.toDataURL();
-		/*imagen=ctx2.getImageData(20,20,canvas2.getAttribute('width'),canvas2.getAttribute('height'));
-		console.log(imagen);*/
 		guardar_imagen=true;
 	}
-	
+	//ahora tenemos que hacer que al pulsar jugar con el muñeco salga el juego directamente
+	var sel=select[1].classList;
+	var nosel=select[2].classList;
+	nosel.remove('visible');
+	nosel.add('invisible');
+	sel.remove('invisible');
+	sel.add('visible');	
 }
 
 //JUEGO
