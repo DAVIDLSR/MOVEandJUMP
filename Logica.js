@@ -38,17 +38,20 @@ var init = function(){
 		}
 	}
 	//JUEGO
+	
 	canvas = document.getElementById("micanvas");
 	contenedor_canvas = document.getElementById("vd_container");
 	video = document.getElementById("mivideo");
 	contenedor_boton_pause = document.getElementById("div_pause");
 	if(canvas && canvas.getContext){
 		monigote1 = new monigote();
+		obstaculo1= new obstaculo();
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
 		interval_1 = setInterval(repintar,10);
 	}
+	
 }
 
 function cambiarPag(activo){
@@ -183,6 +186,29 @@ var rectangulo_base = function(){
 	ctx.fillRect(0,110,1000,10);
 	ctx.fill();
 }
+ 
+
+var obstaculo = function(){
+	this.pelotax = 200;
+	this.pelotay= 4;//nos lo sacara siempre desde arriba
+	this.despel=0.2;//desplazamiento de la pelota
+	this.pintar_obstaculo=function(){
+		console.log('pintamos obs');
+		ctx.fillStyle='white';
+		ctx.beginPath();
+		ctx.arc(this.pelotax,this.pelotay,4,0,2*Math.PI, true);
+		ctx.closePath();
+		ctx.fill();
+	}
+	this.movimiento_obstaculo=function(){
+		console.log('movemos obs');
+		this.pelotax=this.pelotax-this.despel;
+		this.pelotay=this.pelotay+this.despel;
+		console.log(this.pelotax);
+		console.log(this.pelotay);
+
+	}
+}
 
 var monigote = function(){
 	
@@ -239,7 +265,10 @@ var repintar = function(){
 	monigote1.movimiento_lateral();
 	monigote1.saltar_monigote();
 	monigote1.pintar_monigote();
+	obstaculo1.movimiento_obstaculo();
+	obstaculo1.pintar_obstaculo();
 	boton_pause();
+	empezarPause();
 }
 var renaudar_video = function(){
 	console.log("play_video");
@@ -251,7 +280,6 @@ var renaudar_video = function(){
 var parar_video = function(){
 	console.log("onkeydown");
 	console.log(contenedor_boton_pause);
-	cargarDiv(contenedor_boton_pause,"Nuevo_Usuario.html");
 	video.pause();
 	video_run=false;
 	clearInterval(interval_1);
@@ -275,7 +303,10 @@ var boton_pause = function(){
 		boton_pause.style.display = "none";
 	}	
 }
-function cargarDiv(div,url)
-{
-      $(div).load(url);
+
+function empezarPause(){//para que empiece estando en pause hasta que nos metamos en el juego
+	if(select[1].classList.contains('invisible')){
+		parar_video();
+	}
+
 }
