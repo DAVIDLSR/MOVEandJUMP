@@ -126,8 +126,8 @@ header{
     display: none;
     background-color: black; 
     position: absolute;
-    left:85px;
-    top:15px;
+    left:30%;
+    top:2%;
 }
 .menu-contenido a {
     color:white;
