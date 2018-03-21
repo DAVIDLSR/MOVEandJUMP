@@ -38,7 +38,6 @@ var init = function(){
 		}
 	}
 	//JUEGO
-	
 	canvas = document.getElementById("micanvas");
 	contenedor_canvas = document.getElementById("vd_container");
 	video = document.getElementById("mivideo");
@@ -54,9 +53,7 @@ var init = function(){
 		document.onkeyup = movimiento_key_up;
 		interval_1 = setInterval(repintar,10);
 	}
-	
 }
-
 function cambiarPag(activo){
 	 for(var i=0;i<elem.length;i++){//con este bucle detectamos los que hemos pulsado y los que no
         if(activo==elem[i]){
@@ -81,11 +78,8 @@ function cambiarPag(activo){
         seleccionado.remove('invisible');
     }
     seleccionado.add('visible');
-}
-
-	
+}	
 //DIBUJO
-
 function dibujar(event){
 	if(canvas2 && canvas2.getContext){
 		var ctx2=canvas2.getContext('2d');
@@ -105,7 +99,6 @@ function dibujar(event){
 					ctx2.closePath();
 					ctx2.stroke();
 				}
-
 			}else{//if cogergoma==true queremos que nos borre el camino, no que nos lo pinte en blanco
 				console.log('cogemos la goma');
 				ctx2.clearRect(posx,posy,tamaño,tamaño);
@@ -113,7 +106,6 @@ function dibujar(event){
 		}
 	}
 }
-
 function activar(){
 	pintura=true;
 }
@@ -143,7 +135,6 @@ function guardar(){
 	sel.remove('invisible');
 	sel.add('visible');	
 }
-
 //JUEGO
 var movimiento_key_up = function(event){
 	var keyCode = ('which' in event) ? event.which : event.keyCode;
@@ -156,7 +147,6 @@ var movimiento_key_up = function(event){
 		derecha = false;
 	}
 }
-
 var movimiento_key_down = function(event){
 	var keyCode = ('which' in event) ? event.which : event.keyCode;
 	//Salto
@@ -189,8 +179,6 @@ var rectangulo_base = function(){
 	ctx.fillRect(0,380,1000,45);
 	ctx.fill();
 }
- 
-
 var obstaculo = function(){
 	this.radio = 14; 
 	this.pelotax = Math.random()*930;
@@ -214,7 +202,6 @@ var obstaculo = function(){
 			this.pelotax=this.pelotax+this.despel;
 			this.pelotay=this.pelotay+this.despel;
 		}
-		
 		//console.log("pelotax: "+this.pelotax);
 		//console.log("pelotay: "+this.pelotay);
 	}
@@ -224,8 +211,10 @@ var obstaculo = function(){
 			alert('HA COLISIONADO LA PELOTA');
 		}
 	}
+	this.borrar_obtstaculos=function(){
+		clearRect
+	}
 }
-
 var bloque = function(){
 	this.lado = 55;
 	this.blqx = 885; 
@@ -244,9 +233,8 @@ var bloque = function(){
 		//console.log("bloquey: "+this.blqy);
 	}
 }
-
+//JUEGO
 var monigote = function(){
-	
 	this.altura = 45;
 	this.anchura = 45;
 	this.x = 20;
@@ -260,8 +248,7 @@ var monigote = function(){
 			ctx.fill();
 		}else{
 			ctx.drawImage(image,0,0,canvas2.getAttribute('width'),canvas2.getAttribute('height'), this.x,this.y,this.anchura,this.altura);
-		}
-		
+		}	
 	}
 	this.saltar_monigote = function(){
 		if(this.y>167 && sube_salto==true){
@@ -296,8 +283,6 @@ var monigote = function(){
 		}
 	}
 }
-
-
 var repintar = function(){
 	ctx.clearRect(0,0,8000, 8000);
 	rectangulo_base();
@@ -312,7 +297,7 @@ var repintar = function(){
 	empezarPause();
 	obstaculo1.colision_pelota();
 	}
-
+//VIDEO
 var renaudar_video = function(){
 	console.log("play_video");
 	video.play();
@@ -320,7 +305,6 @@ var renaudar_video = function(){
 	interval_1 = setInterval(repintar,10);	
 	boton_pause();
 }
-
 var parar_video = function(){
 	console.log("onkeydown");
 	console.log(contenedor_boton_pause);
@@ -328,13 +312,11 @@ var parar_video = function(){
 	video_run=false;
 	clearInterval(interval_1);
 	boton_pause();	
-
 	console.log("pelotax: "+obstaculo1.pelotax);	
 	console.log("bloquex: "+bloque1.blqx);
 	console.log("bloquey: "+bloque1.blqy);
 	console.log("monigotey: "+monigote1.y);
 }
-
 var boton_pause = function(){
 	var boton_play = document.getElementById("button_play");
 	var boton_pause = document.getElementById("button_pause");
@@ -353,9 +335,16 @@ var boton_pause = function(){
 		boton_pause.style.display = "none";
 	}	
 }
-
 function empezarPause(){//para que empiece estando en pause hasta que nos metamos en el juego
 	if(select[1].classList.contains('invisible')){
 		parar_video();
 	}
+}
+var refresh = function(){
+	console.log("refreshed");
+	monigote1.x=20;
+	monigote.y=380-this.altura;
+	video.currentTime=0;
+	video.reanudar_video();
+	obstaculo1.borrar_obstaculos();
 }
