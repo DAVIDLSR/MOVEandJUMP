@@ -30,10 +30,10 @@ var init = function(){
 	//CAMBIO DE PESTAÑAS
 	select = [];
 	elem=[];
-	for(var i=0;i<3;i++){
+	for(var i=0;i<4;i++){
 		select.push(document.getElementsByTagName('section')[i]);
 	}
-	for(var j=0;j<3;j++){
+	for(var j=0;j<4;j++){
 		elem.push(document.getElementsByTagName('a')[j]);
 		elem[j].onclick=function(evt){
 			cambiarPag(evt.target);
