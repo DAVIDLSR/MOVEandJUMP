@@ -1,10 +1,10 @@
 body{
-	background-image: url('background.jpg');
-	background-position: center center;
-	background-repeat: no-repeat;
- 	background-attachment: fixed;
- 	background-size: cover;
- 	color:white;
+    background-image: url('background.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color:white;
 }
 /**************************** PRINCIPAL ****************************/
 header{
@@ -17,7 +17,7 @@ header{
 /***************************** JUEGO *****************************/
 #vd_container{
     /*background-color: grey;*/
-    top: 100;
+    margin-top: 10%;
     position:fixed;
     height: 528px;
     width: 940px;
@@ -35,7 +35,7 @@ header{
     height: 100%;*/
 }
 #content{
-    top: 100;
+    margin-top: 10%;
     position:fixed;
     height: 528px;
     width: 940px;
@@ -45,11 +45,11 @@ header{
     z-index: -10;
 }
 #micanvas {
-    min-width: 40%;/*Defines the minimum width in percent of the containing block, en este caso, 600x900*/
-    min-height: 87.5%;
+    /*min-width: 70%;/*Defines the minimum width in percent of the containing block, en este caso, 600x900*/
+    min-height: 95.5%;
     width: 940;
-    height: 90%;
-    margin-top: 4.5%;
+    height: 100%;
+    margin-top: 0%;*/
 }
 #div_pause {
     position:fixed;
