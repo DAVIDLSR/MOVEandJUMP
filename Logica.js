@@ -5,6 +5,8 @@ window.onload = function(){
 	izquierda = false;
 	derecha = false;
 	video_run = true;
+	//COLISION
+	col_b_abajo = false; 
 	//DIBUJAR
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
 	tamaño=10;
@@ -44,8 +46,11 @@ var init = function(){
 	video = document.getElementById("mivideo");
 	contenedor_boton_pause = document.getElementById("div_pause");
 	if(canvas && canvas.getContext){
+		canvas.setAttribute("width", "940");
+		canvas.setAttribute("height", "528");		
 		monigote1 = new monigote();
 		obstaculo1= new obstaculo();
+		bloque1 = new bloque();
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
@@ -183,42 +188,67 @@ var movimiento_key_down = function(event){
 }
 var rectangulo_base = function(){
 	ctx.fillStyle="DarkSlateBlue"
-	ctx.fillRect(0,110,1000,10);
+	ctx.fillRect(0,380,1000,45);
 	ctx.fill();
 }
  
 
 var obstaculo = function(){
-	this.pelotax = 200;
-	this.pelotay= 4;//nos lo sacara siempre desde arriba
-	this.despel=0.2;//desplazamiento de la pelota
+	this.radio = 14; 
+	this.pelotax = Math.random()*930;
+	this.pelotay= this.radio ;//nos lo sacara siempre desde arriba
+	this.despel=1;//desplazamiento de la pelota
 	this.pintar_obstaculo=function(){
-		console.log('pintamos obs');
+		//console.log('pintamos obs');
 		ctx.fillStyle='white';
 		ctx.beginPath();
-		ctx.arc(this.pelotax,this.pelotay,4,0,2*Math.PI, true);
+		ctx.arc(this.pelotax,this.pelotay,this.radio,0,2*Math.PI, true);
 		ctx.closePath();
 		ctx.fill();
 	}
 	this.movimiento_obstaculo=function(){
-		console.log('movemos obs');
-		this.pelotax=this.pelotax-this.despel;
-		this.pelotay=this.pelotay+this.despel;
-		console.log(this.pelotax);
-		console.log(this.pelotay);
+		//console.log('movemos obs');
+		if(this.pelotax>940/2){
+			this.pelotax=this.pelotax-this.despel;
+			this.pelotay=this.pelotay+this.despel;
+		}
+		else{
+			this.pelotax=this.pelotax+this.despel;
+			this.pelotay=this.pelotay+this.despel;
+		}
+		
+		//console.log("pelotax: "+this.pelotax);
+		//console.log("pelotay: "+this.pelotay);
+	}
+}
 
+var bloque = function(){
+	this.lado = 55;
+	this.blqx = 885; 
+	this.blqy = Math.random()*(380-2*this.lado); //para que quede por encima del cuadrado y no en el rectangulo base
+	this.blqdx = 0.68;
+	this.pintar_bloque = function(){
+		ctx.fillStyle = "darkred";
+		ctx.beginPath();
+		ctx.fillRect(this.blqx, this.blqy, this.lado, this.lado);
+		ctx.closePath();
+		ctx.fill();
+	}
+	this.movimiento_bloque = function(){
+		this.blqx = this.blqx-this.blqdx; 
+		//console.log("bloquex: "+this.blqx);
+		//console.log("bloquey: "+this.blqy);
 	}
 }
 
 var monigote = function(){
 	
-	this.altura = 12;
-	this.anchura = 12;
+	this.altura = 45;
+	this.anchura = 45;
 	this.x = 20;
-	this.y = 110-this.altura;
-	this.dx = 3;
-	this.dy = 3;
-	
+	this.y = 380-this.altura;
+	this.dx = 8;
+	this.dy = 8;
 	this.pintar_monigote = function(){
 		if(guardar_imagen==false){
 			ctx.fillStyle = "orange"
@@ -230,21 +260,24 @@ var monigote = function(){
 		
 	}
 	this.saltar_monigote = function(){
-		if(this.y>50 && sube_salto==true){
+		if(this.y>167 && sube_salto==true){
 			console.log("subir");
+			//console.log("1: "+this.y);
 			this.y = this.y - this.dy/2;
+			//console.log("2: "+this.y);
+
 			sube_salto = true;
 			baja_salto = false;
 		}			
 		else{
-			if(this.y<=(100-this.altura)||baja_salto==true){
+			if(this.y<=(335-this.altura)||baja_salto==true){
 				console.log("bajar");		
-				if(this.y<(100-this.altura)){
+				if(this.y<(335-this.altura)){
 					this.y = this.y + this.dy/2;
 						baja_salto = true;
 						sube_salto = false;
 				}else{
-					this.y = 110-this.altura;
+					this.y = 380-this.altura;
 					baja_salto = false;
 				}				
 			}	  	
@@ -254,11 +287,27 @@ var monigote = function(){
 		if(izquierda==true && (monigote1.x)>0){
 			this.x = this.x - this.dx/2;
 		}
-		if(derecha==true && (this.x+this.anchura)<300){
+		if(derecha==true && (this.x+this.anchura)<940){
 			this.x = this.x + this.dx/2;
 		}
 	}
 }
+
+
+var colision_bloque = function (){
+	if(monigote1.y <= 300){
+		col_b_abajo == true;
+		//console.log("choca con el bloque abajo");
+	}
+}
+var colision = function(){
+	if(col_b_abajo == true){
+		subir = false;
+		bajar = true; 
+		console.log("choca con el bloque abajo");
+	}
+}
+
 var repintar = function(){
 	ctx.clearRect(0,0,8000, 8000);
 	rectangulo_base();
@@ -267,9 +316,13 @@ var repintar = function(){
 	monigote1.pintar_monigote();
 	obstaculo1.movimiento_obstaculo();
 	obstaculo1.pintar_obstaculo();
+	bloque1.pintar_bloque();
+	bloque1.movimiento_bloque();
 	boton_pause();
 	empezarPause();
-}
+	colision();
+	}
+
 var renaudar_video = function(){
 	console.log("play_video");
 	video.play();
@@ -277,14 +330,21 @@ var renaudar_video = function(){
 	interval_1 = setInterval(repintar,10);	
 	boton_pause();
 }
+
 var parar_video = function(){
 	console.log("onkeydown");
 	console.log(contenedor_boton_pause);
 	video.pause();
 	video_run=false;
 	clearInterval(interval_1);
-	boton_pause();		
+	boton_pause();	
+
+	console.log("pelotax: "+obstaculo1.pelotax);	
+	console.log("bloquex: "+bloque1.blqx);
+	console.log("bloquey: "+bloque1.blqy);
+	console.log("monigotey: "+monigote1.y);
 }
+
 var boton_pause = function(){
 	var boton_play = document.getElementById("button_play");
 	var boton_pause = document.getElementById("button_pause");
@@ -308,5 +368,4 @@ function empezarPause(){//para que empiece estando en pause hasta que nos metamo
 	if(select[1].classList.contains('invisible')){
 		parar_video();
 	}
-
 }
