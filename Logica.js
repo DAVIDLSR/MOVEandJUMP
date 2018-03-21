@@ -5,6 +5,7 @@ window.onload = function(){
 	izquierda = false;
 	derecha = false;
 	video_run = true;
+	array_blq = [];
 	array_obs=[];
 	//DIBUJAR
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
@@ -48,14 +49,14 @@ var init = function(){
 		canvas.setAttribute("width", "940");
 		canvas.setAttribute("height", "528");		
 		monigote1 = new monigote();
-		tiempo_random = 1000+Math.random()*1000;//para crear pelotas cada tiempo random
-		interval_2=setInterval(crear_obstaculos,tiempo_random);
-		bloque1 = new bloque();
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
 		interval_1 = setInterval(repintar,10);
-
+		tiempo_random = 1000+Math.random()*1000;//para crear pelotas cada tiempo random
+		interval_2=setInterval(crear_obstaculos,tiempo_random);
+		tiempo_random_2 = Math.random()*1000+7000;
+		interval_3 = setInterval(crear_bloque, tiempo_random_2);
 	}
 	
 }
@@ -192,7 +193,7 @@ var rectangulo_base = function(){
 	ctx.fillRect(0,380,1000,45);
 	ctx.fill();
 }
- 
+
 var crear_obstaculos=function(){
 	obstaculo1=new obstaculo();
 	array_obs.push(obstaculo1);
@@ -227,8 +228,8 @@ var obstaculo = function(){
 	}
 	this.colision_pelota=function(){//tenemos que comprobar con el array porque vamos a tener muchos objetos pelota
 		for(var i=0;i<array_obs.length;i++){
-			if(this.pelotax-this.radio <= monigote1.x+monigote1.anchura && this.pelotax+this.radio >=monigote1.x 
-				&& this.pelotay-this.radio <= monigote1.y+monigote1.altura && this.pelotay+this.radio >=monigote1.y){
+			if(this.pelotax-this.radio <= monigote1.x+monigote1.lado && this.pelotax+this.radio >=monigote1.x 
+				&& this.pelotay-this.radio <= monigote1.y+monigote1.lado && this.pelotay+this.radio >=monigote1.y){
 				alert('HAS COLISIONADO')
 			}
 		}
@@ -236,14 +237,14 @@ var obstaculo = function(){
 }
 
 var bloque = function(){
-	this.lado = 55;
+	this.blqlado = 55;
 	this.blqx = 885; 
-	this.blqy = Math.random()*(380-2*this.lado); //para que quede por encima del cuadrado y no en el rectangulo base
+	this.blqy = Math.random()*(380-2*this.blqlado); //para que quede por encima del cuadrado y no en el rectangulo base
 	this.blqdx = 0.68;
 	this.pintar_bloque = function(){
 		ctx.fillStyle = "darkred";
 		ctx.beginPath();
-		ctx.fillRect(this.blqx, this.blqy, this.lado, this.lado);
+		ctx.fillRect(this.blqx, this.blqy, this.blqlado, this.blqlado);
 		ctx.closePath();
 		ctx.fill();
 	}
@@ -252,23 +253,36 @@ var bloque = function(){
 		//console.log("bloquex: "+this.blqx);
 		//console.log("bloquey: "+this.blqy);
 	}
+	this.colision_bloque = function(){
+		//console.log("colision");
+		if( ((monigote1.x+monigote1.lado)>=this.blqx) && 
+			(monigote1.x<=(this.blqx+this.blqlado)) && 
+			(monigote1.y<=(this.blqy+this.blqlado)) && 
+			((monigote1.y+monigote1.lado)>=this.blqy)){
+			alert("COLISIOOOOOOOOOOON");
+		}
+	}
+}
+var crear_bloque = function(){
+	bloque1 = new bloque();
+	array_blq.push(bloque1);
+	//bloque1.pintar_bloque();
 }
 
 var monigote = function(){
 	
-	this.altura = 45;
-	this.anchura = 45;
+	this.lado = 45;
 	this.x = 20;
-	this.y = 380-this.altura;
+	this.y = 380-this.lado;
 	this.dx = 8;
 	this.dy = 8;
 	this.pintar_monigote = function(){
 		if(guardar_imagen==false){
 			ctx.fillStyle = "orange"
-			ctx.fillRect(this.x,this.y,this.anchura,this.altura);
+			ctx.fillRect(this.x,this.y,this.lado,this.lado);
 			ctx.fill();
 		}else{
-			ctx.drawImage(image,0,0,canvas2.getAttribute('width'),canvas2.getAttribute('height'), this.x,this.y,this.anchura,this.altura);
+			ctx.drawImage(image,0,0,canvas2.getAttribute('width'),canvas2.getAttribute('height'), this.x,this.y,this.lado,this.lado);
 		}
 		
 	}
@@ -283,14 +297,14 @@ var monigote = function(){
 			baja_salto = false;
 		}			
 		else{
-			if(this.y<=(335-this.altura)||baja_salto==true){
+			if(this.y<=(335-this.lado)||baja_salto==true){
 				console.log("bajar");		
-				if(this.y<(335-this.altura)){
+				if(this.y<(335-this.lado)){
 					this.y = this.y + this.dy/2;
 						baja_salto = true;
 						sube_salto = false;
 				}else{
-					this.y = 380-this.altura;
+					this.y = 380-this.lado;
 					baja_salto = false;
 				}				
 			}	  	
@@ -300,37 +314,39 @@ var monigote = function(){
 		if(izquierda==true && (monigote1.x)>0){
 			this.x = this.x - this.dx/2;
 		}
-		if(derecha==true && (this.x+this.anchura)<940){
+		if(derecha==true && (this.x+this.lado)<940){
 			this.x = this.x + this.dx/2;
 		}
 	}
+	
 }
-
-
 var repintar = function(){
 	ctx.clearRect(0,0,8000, 8000);
 	rectangulo_base();
 	monigote1.movimiento_lateral();
 	monigote1.saltar_monigote();
 	monigote1.pintar_monigote();
-	
-	bloque1.movimiento_bloque();
-	bloque1.pintar_bloque();
-	boton_pause();
-	empezarPause();
+	for(i=0; i<array_blq.length; i++){
+		array_blq[i].movimiento_bloque();
+		array_blq[i].pintar_bloque();
+		array_blq[i].colision_bloque();
+	}
 	for(var i=0;i<array_obs.length;i++){
 		array_obs[i].pintar_obstaculo();
 		array_obs[i].movimiento_obstaculo();
 		array_obs[i].colision_pelota();
 	}
+	boton_pause();
+	empezarPause();
 	}
 
 var renaudar_video = function(){
 	console.log("play_video");
 	video.play();
 	video_run=true;
-	interval_1 = setInterval(repintar,10);	
+	interval_1 = setInterval(repintar,10);
 	interval_2 =setInterval(crear_obstaculos,tiempo_random);
+	interval_3 = setInterval(crear_bloque, tiempo_random_2);
 	boton_pause();
 }
 
@@ -341,9 +357,9 @@ var parar_video = function(){
 	video_run=false;
 	clearInterval(interval_1);
 	clearInterval(interval_2);
+	clearInterval(interval_3);
+
 	boton_pause();	
-
-
 }
 
 var boton_pause = function(){
@@ -370,6 +386,7 @@ function empezarPause(){//para que empiece estando en pause hasta que nos metamo
 		parar_video();
 	}
 }
+
 var refresh = function(){
 	console.log("refreshed");
 	monigote1.x=20;
