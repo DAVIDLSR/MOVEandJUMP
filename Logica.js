@@ -21,6 +21,7 @@ window.onload = function(){
 	init();
 }
 var init = function(){
+	alert("¡Bienvenido a Move & Jump! En este juego deberas saltar y moverte para evitar los obstaculos. Puedes usar las flechas de tu techado para moverte de un lado a otro y saltar. Si quieres parar el juego pulsa el espacio. Tambien puedes dibujar tu propio avatar. ¡Buena suerte y que disfrutes!");
 	console.log(window.window.innerWidth);
 	document.getElementById("Principal").style.display = "block";
 	document.getElementById("Juego").style.display = "none";
