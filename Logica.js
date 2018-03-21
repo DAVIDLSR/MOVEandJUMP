@@ -5,8 +5,6 @@ window.onload = function(){
 	izquierda = false;
 	derecha = false;
 	video_run = true;
-	//COLISION
-	col_b_abajo = false; 
 	//DIBUJAR
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
 	tamaño=10;
@@ -26,10 +24,6 @@ window.onload = function(){
 	init();
 }
 var init = function(){
-	/*¡Bienvenido a Move & Jump! En este juego deberas saltar y moverte para evitar los obstaculos. 
-	Puedes usar las flechas de tu techado para moverte de un lado a otro y saltar. 
-	Si quieres parar el juego pulsa el espacio. Tambien puedes dibujar tu propio avatar. 
-	¡Buena suerte y que disfrutes!");*/
 	console.log(window.window.innerWidth);
 	//CAMBIO DE PESTAÑAS
 	select = [];
@@ -224,6 +218,12 @@ var obstaculo = function(){
 		//console.log("pelotax: "+this.pelotax);
 		//console.log("pelotay: "+this.pelotay);
 	}
+	this.colision_pelota=function(){
+		if(this.pelotax-this.radio <= monigote1.x+monigote1.anchura && this.pelotax+this.radio >=monigote1.x 
+			&& this.pelotay-this.radio <= monigote1.y+monigote1.altura && this.pelotay+this.radio >=monigote1.y){
+			alert('HA COLISIONADO LA PELOTA');
+		}
+	}
 }
 
 var bloque = function(){
@@ -298,20 +298,6 @@ var monigote = function(){
 }
 
 
-var colision_bloque = function (){
-	if(monigote1.y <= 300){
-		col_b_abajo == true;
-		//console.log("choca con el bloque abajo");
-	}
-}
-var colision = function(){
-	if(col_b_abajo == true){
-		subir = false;
-		bajar = true; 
-		console.log("choca con el bloque abajo");
-	}
-}
-
 var repintar = function(){
 	ctx.clearRect(0,0,8000, 8000);
 	rectangulo_base();
@@ -324,7 +310,7 @@ var repintar = function(){
 	bloque1.movimiento_bloque();
 	boton_pause();
 	empezarPause();
-	colision();
+	obstaculo1.colision_pelota();
 	}
 
 var renaudar_video = function(){
