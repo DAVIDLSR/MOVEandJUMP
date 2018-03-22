@@ -282,8 +282,27 @@ var muerte=function(){
 		console.log('te queda una vida');
 	}else if(vidas==0){
 		console.log('has muerto');
-		muerto==true;	   
+		muerto==true;
+	    var im= document.getElementById('muerte').classList;
+	    select[1].classList.remove('visible');
+	    select[1].classList.add('invisible');
+	    im.remove('invisible');
+	    im.add('visible');
+	    clearInterval(interval_1);
+		clearInterval(interval_2);
+		clearInterval(interval_3);
+		var volver_inicio=document.getElementById('volverinicio');
+		console.log(volver_inicio);
+		volver_inicio.onclick=function(){
+			im.remove('visible');
+	    	im.add('invisible');
+			select[0].classList.remove('invisible');
+			select[0].classList.add('visible');
+			window.onload();
+		}
+	   
 	}
+
 }
 
 var crear_diamante = function(){
