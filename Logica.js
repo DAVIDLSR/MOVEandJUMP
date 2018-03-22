@@ -390,11 +390,8 @@ function empezarPause(){//para que empiece estando en pause hasta que nos metamo
 }
 
 var refresh = function(){
-	console.log("refreshed");
-	monigote1.x=20;
-	monigote.y=380-this.altura;
-	video.currentTime=0;
-	video.reanudar_video();
-	obstaculo1.borrar_obstaculos();
-	reanudar_video();
+	clearInterval(interval_1);
+	clearInterval(interval_2);
+	clearInterval(interval_3);
+	window.onload();
 }
