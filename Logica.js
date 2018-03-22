@@ -227,12 +227,13 @@ var obstaculo = function(){
 		//console.log("pelotay: "+this.pelotay);
 	}
 	this.colision_pelota=function(){//tenemos que comprobar con el array porque vamos a tener muchos objetos pelota
-		for(var i=0;i<array_obs.length;i++){
 			if(this.pelotax-this.radio <= monigote1.x+monigote1.lado && this.pelotax+this.radio >=monigote1.x 
 				&& this.pelotay-this.radio <= monigote1.y+monigote1.lado && this.pelotay+this.radio >=monigote1.y){
-				alert('HAS COLISIONADO')
+				alert('HAS COLISIONADO');
+				this.pelotax=0;
+				this.pelotay=0;
 			}
-		}
+		
 	}
 }
 
@@ -338,7 +339,8 @@ var repintar = function(){
 	}
 	boton_pause();
 	empezarPause();
-	}
+
+}
 
 var renaudar_video = function(){
 	console.log("play_video");
@@ -394,4 +396,5 @@ var refresh = function(){
 	video.currentTime=0;
 	video.reanudar_video();
 	obstaculo1.borrar_obstaculos();
+	reanudar_video();
 }
