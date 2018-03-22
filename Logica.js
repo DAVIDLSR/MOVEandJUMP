@@ -1,4 +1,3 @@
-
 window.onload = function(){
 	//JUEGO
 	sube_salto = false;
@@ -7,10 +6,12 @@ window.onload = function(){
 	derecha = false;
 	video_run = true;
 	array_blq = [];
-	array_obs=[];
+	array_pel=[];
+	array_diam=[];
+	no_choca = true;
+	vidas = 2; 
+	muerto = false;  
 	//DIBUJAR
-	vidas=2;
-	muerto=false;
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
 	tamaño=10;
 	pintura=false;
@@ -29,7 +30,6 @@ window.onload = function(){
 	init();
 }
 var init = function(){
-	console.log(window.window.innerWidth);
 	//CAMBIO DE PESTAÑAS
 	select = [];
 	elem=[];
@@ -42,8 +42,9 @@ var init = function(){
 			cambiarPag(evt.target);
 		}
 	}
+
 	//JUEGO
-	
+
 	canvas = document.getElementById("micanvas");
 	contenedor_canvas = document.getElementById("vd_container");
 	video = document.getElementById("mivideo");
@@ -56,10 +57,12 @@ var init = function(){
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
 		interval_1 = setInterval(repintar,10);
-		tiempo_random = 1000+Math.random()*1000;//para crear pelotas cada tiempo random
-		interval_2=setInterval(crear_obstaculos,tiempo_random);
-		tiempo_random_2 = Math.random()*1000+7000;
-		interval_3 = setInterval(crear_bloque, tiempo_random_2);
+		tiempo_random_2 = 1000+Math.random()*1000;//1 segundo para pelota//para crear pelotas cada tiempo random
+		interval_2=setInterval(crear_pelota,tiempo_random_2);
+		tiempo_random_3 = Math.random()*1000+7000; //7 segundos para bloques
+		interval_3 = setInterval(crear_bloque, tiempo_random_3);
+		tiempo_random_4 = Math.random()*1000+10000; //10 segundos para diamantes
+		interval_4 = setInterval(crear_diamante, tiempo_random_4);
 	}
 	
 }
@@ -185,9 +188,9 @@ var movimiento_key_down = function(event){
 		parar_video();
 		keyCode=null;
 	}
-	//Renaudar Video
+	//Reanudar Video
 	if(keyCode==32 && video_run==false){
-		renaudar_video();
+		reanudar_video();
 		keyCode=null;
 	}
 }
@@ -197,25 +200,24 @@ var rectangulo_base = function(){
 	ctx.fill();
 }
 
-var crear_obstaculos=function(){
-	obstaculo1=new obstaculo();
-	array_obs.push(obstaculo1);
-
+var crear_pelota=function(){
+	pelota1 =new pelota();
+	array_pel.push(pelota1);
 }
-var obstaculo = function(){
+var pelota = function(){
 	this.radio = 14; 
 	this.pelotax = Math.random()*930;
 	this.pelotay= this.radio ;//nos lo sacara siempre desde arriba
-	this.despel=0.5+Math.random();//desplazamiento de la pelota
-	this.pintar_obstaculo=function(){
-		//console.log('pintamos obs');
+	this.despel=1;//desplazamiento de la pelota
+	this.pintar_pelota=function(){
+		//console.log('pintamos pelota');
 		ctx.fillStyle='white';
 		ctx.beginPath();
 		ctx.arc(this.pelotax,this.pelotay,this.radio,0,2*Math.PI, true);
 		ctx.closePath();
 		ctx.fill();
 	}
-	this.movimiento_obstaculo=function(){
+	this.movimiento_pelota=function(){
 		if(this.pelotax%2>=0.5){
 			this.pelotax = this.pelotax - this.despel;
 			this.pelotay = this.pelotay + this.despel;
@@ -224,28 +226,30 @@ var obstaculo = function(){
 			this.pelotax=this.pelotax+this.despel;
 			this.pelotay=this.pelotay+this.despel;
 		}
-
 	}
 	this.colision_pelota=function(){//tenemos que comprobar con el array porque vamos a tener muchos objetos pelota
 			if(this.pelotax-this.radio <= monigote1.x+monigote1.lado && this.pelotax+this.radio >=monigote1.x 
 				&& this.pelotay-this.radio <= monigote1.y+monigote1.lado && this.pelotay+this.radio >=monigote1.y){
-				muerte();
 				alert('HAS COLISIONADO');
 				this.pelotax=0;
 				this.pelotay=0;
-				
+				muerte();
 			}
 		
 	}
 }
 
+var crear_bloque = function(){
+	bloque1 = new bloque();
+	array_blq.push(bloque1);
+}
 var bloque = function(){
 	this.blqlado = 55;
 	this.blqx = 885; 
-	this.blqy = Math.random()*(380-2*this.blqlado); //para que quede por encima del cuadrado y no en el rectangulo base
+	this.blqy = Math.random()*(180) + 100; //para que quede por encima del cuadrado y no en el rectangulo base
 	this.blqdx = 0.68;
 	this.pintar_bloque = function(){
-		ctx.fillStyle = "darkred";
+		ctx.fillStyle = "Chartreuse";
 		ctx.beginPath();
 		ctx.fillRect(this.blqx, this.blqy, this.blqlado, this.blqlado);
 		ctx.closePath();
@@ -253,37 +257,67 @@ var bloque = function(){
 	}
 	this.movimiento_bloque = function(){
 		this.blqx = this.blqx-this.blqdx; 
-		//console.log("bloquex: "+this.blqx);
-		//console.log("bloquey: "+this.blqy);
 	}
 	this.colision_bloque = function(){
-		//console.log("colision");
-		if( ((monigote1.x+monigote1.lado)>=this.blqx) && 
+		if(no_choca == true){
+			if( ((monigote1.x+monigote1.lado)>=this.blqx) && 
 			(monigote1.x<=(this.blqx+this.blqlado)) && 
 			(monigote1.y<=(this.blqy+this.blqlado)) && 
 			((monigote1.y+monigote1.lado)>=this.blqy)){
-			alert("COLISIOOOOOOOOOOON");
-			muerte();
+				alert("COLISIOOOOOOOOOOON");
+				no_choca = false;
+				this.blqx= 940; 
+				this.blqy=Math.random()*(180) + 100;
+				muerte();
+			}
+		}
+		else{
+			no_choca = true; 
 		}
 	}
 }
-var crear_bloque = function(){
-	bloque1 = new bloque();
-	array_blq.push(bloque1);
-	//bloque1.pintar_bloque();
-}
-
 var muerte=function(){
 	vidas--;
 	if(vidas==1){
 		console.log('te queda una vida');
 	}else if(vidas==0){
 		console.log('has muerto');
-		muerto==true;
-
-	   
+		muerto==true;	   
 	}
+}
 
+var crear_diamante = function(){
+	diamante1 = new diamante();
+	array_diam.push(diamante1);
+}
+var diamante = function(){
+	this.rnd = 100+Math.random()*200;
+	this.diamx = 940; 
+	this.diamdx =0.5; 
+	this.pintar_diamante=function(){
+		ctx.fillStyle = "cyan";
+		//console.log(rnd);
+		ctx.beginPath();
+		ctx.moveTo(this.diamx-12, this.rnd);
+		ctx.lineTo(this.diamx, this.rnd+20);
+		ctx.lineTo(this.diamx-12, this.rnd+40);
+		ctx.lineTo(this.diamx-24, this.rnd+20);
+		ctx.fill();
+	}
+	this.movimiento_diamante = function(){
+		this.diamx = this.diamx-this.diamdx; 
+	}
+	this.coger_diamante = function(){
+		centro_x = this.diamx-12; 
+		centro_y = this.rnd+20;
+		if(centro_x>monigote1.x && centro_x<(monigote1.x+monigote1.lado)){
+			if(centro_y>monigote1.y && centro_y<(monigote1.y+monigote1.lado)){
+				console.log("cojo diamante");
+				this.diamx = 940; 
+				this.rnd = 100+Math.random()*200;
+			}
+		}
+	}
 }
 
 var monigote = function(){
@@ -291,8 +325,8 @@ var monigote = function(){
 	this.lado = 45;
 	this.x = 20;
 	this.y = 380-this.lado;
-	this.dx = 8;
-	this.dy = 8;
+	this.dx = 4;
+	this.dy = 4;
 	this.pintar_monigote = function(){
 		if(guardar_imagen==false){
 			ctx.fillStyle = "orange"
@@ -300,11 +334,10 @@ var monigote = function(){
 			ctx.fill();
 		}else{
 			ctx.drawImage(image,0,0,canvas2.getAttribute('width'),canvas2.getAttribute('height'), this.x,this.y,this.lado,this.lado);
-		}
-		
+		}	
 	}
 	this.saltar_monigote = function(){
-		if(this.y>167 && sube_salto==true){
+		if(this.y>50 && sube_salto==true){
 			console.log("subir");
 			//console.log("1: "+this.y);
 			this.y = this.y - this.dy/2;
@@ -343,27 +376,34 @@ var repintar = function(){
 	monigote1.movimiento_lateral();
 	monigote1.saltar_monigote();
 	monigote1.pintar_monigote();
-	for(i=0; i<array_blq.length; i++){
+	for(var i=0;i<array_pel.length;i++){
+		array_pel[i].pintar_pelota();
+		array_pel[i].movimiento_pelota();
+		array_pel[i].colision_pelota();
+	}
+	for(var i=0; i<array_blq.length; i++){
 		array_blq[i].movimiento_bloque();
 		array_blq[i].pintar_bloque();
 		array_blq[i].colision_bloque();
 	}
-	for(var i=0;i<array_obs.length;i++){
-		array_obs[i].pintar_obstaculo();
-		array_obs[i].movimiento_obstaculo();
-		array_obs[i].colision_pelota();
+	for(var i=0; i<array_diam.length; i++){
+		array_diam[i].movimiento_diamante();
+		array_diam[i].pintar_diamante();
+		array_diam[i].coger_diamante();
 	}
 	boton_pause();
 	empezarPause();
+
 }
 
-var renaudar_video = function(){
+var reanudar_video = function(){
 	console.log("play_video");
 	video.play();
 	video_run=true;
 	interval_1 = setInterval(repintar,10);
-	interval_2 =setInterval(crear_obstaculos,tiempo_random);
-	interval_3 = setInterval(crear_bloque, tiempo_random_2);
+	interval_2 =setInterval(crear_pelota,tiempo_random_2);
+	interval_3 = setInterval(crear_bloque, tiempo_random_3);
+	interval_4 = setInterval(crear_diamante, tiempo_random_4);
 	boton_pause();
 }
 
@@ -375,6 +415,7 @@ var parar_video = function(){
 	clearInterval(interval_1);
 	clearInterval(interval_2);
 	clearInterval(interval_3);
+	clearInterval(interval_4);
 	boton_pause();	
 }
 
@@ -407,5 +448,6 @@ var refresh = function(){
 	clearInterval(interval_1);
 	clearInterval(interval_2);
 	clearInterval(interval_3);
+	clearInterval(interval_4);
 	window.onload();
 }
