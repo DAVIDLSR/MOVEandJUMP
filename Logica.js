@@ -1,3 +1,4 @@
+
 window.onload = function(){
 	//JUEGO
 	sube_salto = false;
@@ -7,9 +8,9 @@ window.onload = function(){
 	video_run = true;
 	array_blq = [];
 	array_obs=[];
-	array_diam=[];
-	no_choca = true; 
 	//DIBUJAR
+	vidas=2;
+	muerto=false;
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
 	tamaño=10;
 	pintura=false;
@@ -55,12 +56,10 @@ var init = function(){
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
 		interval_1 = setInterval(repintar,10);
-		tiempo_random_2 = 1000+Math.random()*1000;//1 segundo para pelota//para crear pelotas cada tiempo random
-		interval_2=setInterval(crear_obstaculos,tiempo_random_2);
-		tiempo_random_3 = Math.random()*1000+7000; //7 segundos para bloques
-		interval_3 = setInterval(crear_bloque, tiempo_random_3);
-		tiempo_random_4 = Math.random()*1000+10000; //10 segundos para diamantes
-		interval_4 = setInterval(crear_diamante, tiempo_random_4);
+		tiempo_random = 1000+Math.random()*1000;//para crear pelotas cada tiempo random
+		interval_2=setInterval(crear_obstaculos,tiempo_random);
+		tiempo_random_2 = Math.random()*1000+7000;
+		interval_3 = setInterval(crear_bloque, tiempo_random_2);
 	}
 	
 }
@@ -207,7 +206,7 @@ var obstaculo = function(){
 	this.radio = 14; 
 	this.pelotax = Math.random()*930;
 	this.pelotay= this.radio ;//nos lo sacara siempre desde arriba
-	this.despel=1;//desplazamiento de la pelota
+	this.despel=0.5+Math.random();//desplazamiento de la pelota
 	this.pintar_obstaculo=function(){
 		//console.log('pintamos obs');
 		ctx.fillStyle='white';
@@ -217,41 +216,36 @@ var obstaculo = function(){
 		ctx.fill();
 	}
 	this.movimiento_obstaculo=function(){
-		//console.log('movemos obs');
-		if(this.pelotax>940/2){
-			this.pelotax=this.pelotax-this.despel;
-			this.pelotay=this.pelotay+this.despel;
+		if(this.pelotax%2>=0.5){
+			this.pelotax = this.pelotax - this.despel;
+			this.pelotay = this.pelotay + this.despel;
 		}
 		else{
 			this.pelotax=this.pelotax+this.despel;
 			this.pelotay=this.pelotay+this.despel;
 		}
-		
-		//console.log("pelotax: "+this.pelotax);
-		//console.log("pelotay: "+this.pelotay);
+
 	}
 	this.colision_pelota=function(){//tenemos que comprobar con el array porque vamos a tener muchos objetos pelota
 			if(this.pelotax-this.radio <= monigote1.x+monigote1.lado && this.pelotax+this.radio >=monigote1.x 
 				&& this.pelotay-this.radio <= monigote1.y+monigote1.lado && this.pelotay+this.radio >=monigote1.y){
+				muerte();
 				alert('HAS COLISIONADO');
 				this.pelotax=0;
 				this.pelotay=0;
+				
 			}
 		
 	}
 }
 
-var crear_bloque = function(){
-	bloque1 = new bloque();
-	array_blq.push(bloque1);
-}
 var bloque = function(){
 	this.blqlado = 55;
 	this.blqx = 885; 
-	this.blqy = Math.random()*(180) + 100; //para que quede por encima del cuadrado y no en el rectangulo base
+	this.blqy = Math.random()*(380-2*this.blqlado); //para que quede por encima del cuadrado y no en el rectangulo base
 	this.blqdx = 0.68;
 	this.pintar_bloque = function(){
-		ctx.fillStyle = "Chartreuse";
+		ctx.fillStyle = "darkred";
 		ctx.beginPath();
 		ctx.fillRect(this.blqx, this.blqy, this.blqlado, this.blqlado);
 		ctx.closePath();
@@ -259,48 +253,37 @@ var bloque = function(){
 	}
 	this.movimiento_bloque = function(){
 		this.blqx = this.blqx-this.blqdx; 
+		//console.log("bloquex: "+this.blqx);
+		//console.log("bloquey: "+this.blqy);
 	}
 	this.colision_bloque = function(){
-		if(no_choca == true){
-			if( ((monigote1.x+monigote1.lado)>=this.blqx) && 
+		//console.log("colision");
+		if( ((monigote1.x+monigote1.lado)>=this.blqx) && 
 			(monigote1.x<=(this.blqx+this.blqlado)) && 
 			(monigote1.y<=(this.blqy+this.blqlado)) && 
 			((monigote1.y+monigote1.lado)>=this.blqy)){
-				alert("COLISIOOOOOOOOOOON");
-				no_choca = false;
-				this.blqx= 940; 
-				this.blqy=Math.random()*(180) + 100;
-			}
-		}
-		else{
-			no_choca = true; 
+			alert("COLISIOOOOOOOOOOON");
+			muerte();
 		}
 	}
 }
-var crear_diamante = function(){
-	diamante1 = new diamante();
-	array_diam.push(diamante1);
+var crear_bloque = function(){
+	bloque1 = new bloque();
+	array_blq.push(bloque1);
+	//bloque1.pintar_bloque();
 }
-var diamante = function(){
-	this.rnd = 100+Math.random()*200;
-	this.diamx = 940; 
-	this.diamdx =0.5; 
-	this.pintar_diamante=function(){
-		ctx.fillStyle = "cyan";
-		//console.log(rnd);
-		ctx.beginPath();
-		ctx.moveTo(this.diamx-12, this.rnd);
-		ctx.lineTo(this.diamx, this.rnd+20);
-		ctx.lineTo(this.diamx-12, this.rnd+40);
-		ctx.lineTo(this.diamx-24, this.rnd+20);
-		ctx.fill();
-	}
-	this.movimiento_diamante = function(){
-		this.diamx = this.diamx-this.diamdx; 
-	}
-	this.coger_diamante = function(){
 
+var muerte=function(){
+	vidas--;
+	if(vidas==1){
+		console.log('te queda una vida');
+	}else if(vidas==0){
+		console.log('has muerto');
+		muerto==true;
+
+	   
 	}
+
 }
 
 var monigote = function(){
@@ -308,8 +291,8 @@ var monigote = function(){
 	this.lado = 45;
 	this.x = 20;
 	this.y = 380-this.lado;
-	this.dx = 4;
-	this.dy = 4;
+	this.dx = 8;
+	this.dy = 8;
 	this.pintar_monigote = function(){
 		if(guardar_imagen==false){
 			ctx.fillStyle = "orange"
@@ -317,10 +300,11 @@ var monigote = function(){
 			ctx.fill();
 		}else{
 			ctx.drawImage(image,0,0,canvas2.getAttribute('width'),canvas2.getAttribute('height'), this.x,this.y,this.lado,this.lado);
-		}	
+		}
+		
 	}
 	this.saltar_monigote = function(){
-		if(this.y>50 && sube_salto==true){
+		if(this.y>167 && sube_salto==true){
 			console.log("subir");
 			//console.log("1: "+this.y);
 			this.y = this.y - this.dy/2;
@@ -359,33 +343,27 @@ var repintar = function(){
 	monigote1.movimiento_lateral();
 	monigote1.saltar_monigote();
 	monigote1.pintar_monigote();
+	for(i=0; i<array_blq.length; i++){
+		array_blq[i].movimiento_bloque();
+		array_blq[i].pintar_bloque();
+		array_blq[i].colision_bloque();
+	}
 	for(var i=0;i<array_obs.length;i++){
 		array_obs[i].pintar_obstaculo();
 		array_obs[i].movimiento_obstaculo();
 		array_obs[i].colision_pelota();
 	}
-	for(var i=0; i<array_blq.length; i++){
-		array_blq[i].movimiento_bloque();
-		array_blq[i].pintar_bloque();
-		array_blq[i].colision_bloque();
-	}
-	for(var i=0; i<array_diam.length; i++){
-		array_diam[i].movimiento_diamante();
-		array_diam[i].pintar_diamante();
-	}
 	boton_pause();
 	empezarPause();
-
 }
 
-var reanudar_video = function(){
+var renaudar_video = function(){
 	console.log("play_video");
 	video.play();
 	video_run=true;
 	interval_1 = setInterval(repintar,10);
 	interval_2 =setInterval(crear_obstaculos,tiempo_random);
 	interval_3 = setInterval(crear_bloque, tiempo_random_2);
-	interval_4 = setInterval(crear_diamante, tiempo_random_4);
 	boton_pause();
 }
 
@@ -397,7 +375,6 @@ var parar_video = function(){
 	clearInterval(interval_1);
 	clearInterval(interval_2);
 	clearInterval(interval_3);
-	clearInterval(interval_4);
 	boton_pause();	
 }
 
@@ -430,6 +407,5 @@ var refresh = function(){
 	clearInterval(interval_1);
 	clearInterval(interval_2);
 	clearInterval(interval_3);
-	clearInterval(interval_4);
 	window.onload();
 }
