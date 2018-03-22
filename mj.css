@@ -105,6 +105,22 @@ header{
     background-size: 50px 50px;
     background-repeat: no-repeat;
 }
+#gameover{
+    position:fixed;
+    margin-top: 15%;
+    margin-left: 30%;
+
+}
+#volverinicio{
+    margin-top: 20%;
+    margin-left: 3%;
+    min-height: 20%;
+    min-width: 10%;
+    background-image: url('voler_inicio.jpg');
+    background-position: center;
+    background-size: 70px 70px;
+    background-repeat: no-repeat;
+}
 
 /****************************** MENU ******************************/
 #contenedor{
