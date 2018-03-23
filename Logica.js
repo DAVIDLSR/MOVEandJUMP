@@ -276,36 +276,6 @@ var bloque = function(){
 		}
 	}
 }
-var muerte=function(){
-	vidas--;
-	if(vidas==1){
-		console.log('te queda una vida');
-		monigote1.lado=70;
-	}else if(vidas==0){
-		console.log('has muerto');
-		muerto==true;
-	    var im= document.getElementById('muerte').classList;
-	    select[1].classList.remove('visible');
-	    select[1].classList.add('invisible');
-	    im.remove('invisible');
-	    im.add('visible');
-	    clearInterval(interval_1);
-		clearInterval(interval_2);
-		clearInterval(interval_3);
-		var volver_inicio=document.getElementById('volverinicio');
-		console.log(volver_inicio);
-		volver_inicio.onclick=function(){
-			im.remove('visible');
-	    	im.add('invisible');
-			select[0].classList.remove('invisible');
-			select[0].classList.add('visible');
-			window.onload();
-		}
-	   
-	}
-
-}
-
 var crear_diamante = function(){
 	diamante1 = new diamante();
 	array_diam.push(diamante1);
@@ -339,6 +309,38 @@ var diamante = function(){
 		}
 	}
 }
+var muerte=function(){
+	vidas--;
+	if(vidas==1){
+		console.log('te queda una vida');
+		monigote1.lado=70;
+		monigote1.y = 310; 
+	}else if(vidas==0){
+		console.log('has muerto');
+		muerto==true;
+	    var im= document.getElementById('muerte').classList;
+	    select[1].classList.remove('visible');
+	    select[1].classList.add('invisible');
+	    im.remove('invisible');
+	    im.add('visible');
+	    clearInterval(interval_1);
+		clearInterval(interval_2);
+		clearInterval(interval_3);
+		var volver_inicio=document.getElementById('volverinicio');
+		console.log(volver_inicio);
+		volver_inicio.onclick=function(){
+			im.remove('visible');
+	    	im.add('invisible');
+			select[0].classList.remove('invisible');
+			select[0].classList.add('visible');
+			window.onload();
+		}
+	   
+	}
+
+}
+
+
 
 var monigote = function(){
 	
