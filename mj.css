@@ -14,6 +14,18 @@ header{
     top:30%;
     right:15%;
 }
+/************************** INFORMACION **************************/
+#cuadro{
+    background-color:rgba(255, 255, 255, 0.7);
+    position:absolute;
+    top:20%;
+    right:12%;
+    width:1000px;
+    color:black;
+}
+#cuadro.hh1{
+   margin:auto;
+}
 /***************************** JUEGO *****************************/
 #vd_container{
     /*background-color: grey;*/
