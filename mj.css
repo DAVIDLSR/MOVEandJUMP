@@ -105,21 +105,43 @@ header{
     background-size: 50px 50px;
     background-repeat: no-repeat;
 }
+#muerte{
+    width: 80%;
+    height: 100%;
+    margin-top: 0%;
+    margin-left: 10%;
+}
 #gameover{
+    height: auto;
+    width:40% ;
     position:fixed;
-    margin-top: 15%;
-    margin-left: 30%;
+    margin-top: 23%;
+    margin-left: 20%;
 
 }
 #volverinicio{
-    margin-top: 20%;
-    margin-left: 3%;
+    margin-top: 13%;
+    margin-left: 23%;
     min-height: 20%;
     min-width: 10%;
+    border-color: transparent;
     background-image: url('volver_inicio_2.png');
+    background-color: transparent;
     background-position: center;
     background-size: 70px 70px;
     background-repeat: no-repeat;
+}
+#marcador{
+    margin-top: 12%;
+    margin-left: 28%;
+    position:fixed;
+    background-color: slategray;
+    font-family: courier new; 
+    font-weight: bold; 
+    font-size: 30px; 
+    padding: 2%;
+    color: tomato;
+    border: dotted 2px red;
 }
 
 /****************************** MENU ******************************/
