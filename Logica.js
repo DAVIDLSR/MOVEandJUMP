@@ -280,6 +280,7 @@ var muerte=function(){
 	vidas--;
 	if(vidas==1){
 		console.log('te queda una vida');
+		monigote1.lado=70;
 	}else if(vidas==0){
 		console.log('has muerto');
 		muerto==true;
