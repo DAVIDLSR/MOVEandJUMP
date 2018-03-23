@@ -11,6 +11,8 @@ window.onload = function(){
 	no_choca = true;
 	vidas = 2; 
 	muerto = false;  
+	tiempo = 0; 
+	numero_diam = 0;
 	//DIBUJAR
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
 	tamaño=10;
@@ -62,6 +64,7 @@ var init = function(){
 		interval_3 = setInterval(crear_bloque, tiempo_random_3);
 		tiempo_random_4 = Math.random()*1000+10000; //10 segundos para diamantes
 		interval_4 = setInterval(crear_diamante, tiempo_random_4);
+		interval_5 = setInterval(puntos, 10);
 	}
 	
 }
@@ -72,7 +75,7 @@ function cambiarPag(activo){
 	 for(var i=0;i<elem.length;i++){//con este bucle detectamos los que hemos pulsado y los que no
         if(activo==elem[i]){
             eleccion=i;
-            console.log(eleccion);
+            //console.log(eleccion);
         }else{
             noelec=[];
             noelec.push(i);
@@ -306,6 +309,8 @@ var diamante = function(){
 				console.log("cojo diamante");
 				this.diamx = 940; 
 				this.rnd = 100+Math.random()*200;
+				numero_diam = numero_diam+1; 
+				console.log(numero_diam);
 			}
 		}
 	}
@@ -328,10 +333,14 @@ var muerte=function(){
 	    clearInterval(interval_1);
 		clearInterval(interval_2);
 		clearInterval(interval_3);
+		//clearInterval(interval_4);
+		//clearInterval(interval_5);
 		sube_salto = false;
 		baja_salto = false;
 		izquierda = false;
 		derecha = false;
+		var puntuacion = document.getElementById("marcador");
+		puntuacion.innerHTML = "PUNTOS: " + puntos();
 		var volver_inicio=document.getElementById('volverinicio');
 		console.log(volver_inicio);
 
@@ -420,6 +429,16 @@ var repintar = function(){
 	empezarPause();
 }
 
+//PUNTUACIÓN
+//----------CONTADOR DE TIEMPO 
+var puntos = function(){
+		tiempo = tiempo+1; //en realidad son milisegundos
+		return tiempo + numero_diam*1000; 
+}
+
+
+
+
 //----------FUNCIONES DE VÍDEO 
 var reanudar_video = function(){
 	console.log("play_video");
@@ -429,7 +448,9 @@ var reanudar_video = function(){
 	interval_2 =setInterval(crear_pelota,tiempo_random_2);
 	interval_3 = setInterval(crear_bloque, tiempo_random_3);
 	interval_4 = setInterval(crear_diamante, tiempo_random_4);
+	interval_5 = setInterval (puntos,1);
 	boton_pause();
+	
 }
 
 var parar_video = function(){
@@ -437,11 +458,15 @@ var parar_video = function(){
 	console.log(contenedor_boton_pause);
 	video.pause();
 	video_run=false;
-	clearInterval(interval_1);
-	clearInterval(interval_2);
-	clearInterval(interval_3);
-	clearInterval(interval_4);
+	clearInterval(interval_1);//repintar
+	clearInterval(interval_2);//pelota
+	clearInterval(interval_3);//bloque
+	clearInterval(interval_4);//diamante
+	clearInterval(interval_5);//contador de puntos
 	boton_pause();	
+	console.log("puntos = "+tiempo);
+	console.log("numero diamantes: "+numero_diam);
+
 }
 
 var boton_pause = function(){
@@ -474,5 +499,6 @@ var refresh = function(){
 	clearInterval(interval_2);
 	clearInterval(interval_3);
 	clearInterval(interval_4);
+	clearInterval(interval_5);
 	window.onload();
 }
