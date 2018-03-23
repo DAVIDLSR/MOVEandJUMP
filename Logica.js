@@ -44,7 +44,6 @@ var init = function(){
 	}
 
 	//JUEGO
-
 	canvas = document.getElementById("micanvas");
 	contenedor_canvas = document.getElementById("vd_container");
 	video = document.getElementById("mivideo");
@@ -67,6 +66,8 @@ var init = function(){
 	
 }
 
+//PAGINA PRINCIPAL
+//----------CAMBIO DE PESTAÑAS 
 function cambiarPag(activo){
 	 for(var i=0;i<elem.length;i++){//con este bucle detectamos los que hemos pulsado y los que no
         if(activo==elem[i]){
@@ -93,9 +94,8 @@ function cambiarPag(activo){
     seleccionado.add('visible');
 }
 
-	
 //DIBUJO
-
+//----------CANVAS DIBUJO 
 function dibujar(event){
 	if(canvas2 && canvas2.getContext){
 		var ctx2=canvas2.getContext('2d');
@@ -123,7 +123,7 @@ function dibujar(event){
 		}
 	}
 }
-
+//----------FUNCIONES DEL DIBUJO
 function activar(){
 	pintura=true;
 }
@@ -155,6 +155,7 @@ function guardar(){
 }
 
 //JUEGO
+//----------RECONOCIMIENTO TECLADO 
 var movimiento_key_up = function(event){
 	var keyCode = ('which' in event) ? event.which : event.keyCode;
 	//Dejo de avanzar Izquiera
@@ -199,7 +200,7 @@ var rectangulo_base = function(){
 	ctx.fillRect(0,380,1000,45);
 	ctx.fill();
 }
-
+//----------CREA PELOTA
 var crear_pelota=function(){
 	pelota1 =new pelota();
 	array_pel.push(pelota1);
@@ -238,7 +239,7 @@ var pelota = function(){
 		
 	}
 }
-
+//----------CREA BLOQUE
 var crear_bloque = function(){
 	bloque1 = new bloque();
 	array_blq.push(bloque1);
@@ -276,6 +277,7 @@ var bloque = function(){
 		}
 	}
 }
+//----------CREA DIAMANTE
 var crear_diamante = function(){
 	diamante1 = new diamante();
 	array_diam.push(diamante1);
@@ -286,7 +288,6 @@ var diamante = function(){
 	this.diamdx =0.5; 
 	this.pintar_diamante=function(){
 		ctx.fillStyle = "cyan";
-		//console.log(rnd);
 		ctx.beginPath();
 		ctx.moveTo(this.diamx-12, this.rnd);
 		ctx.lineTo(this.diamx, this.rnd+20);
@@ -309,6 +310,7 @@ var diamante = function(){
 		}
 	}
 }
+//----------FUNCION MUERTE (2 VIDAS)
 var muerte=function(){
 	vidas--;
 	if(vidas==1){
@@ -326,22 +328,23 @@ var muerte=function(){
 	    clearInterval(interval_1);
 		clearInterval(interval_2);
 		clearInterval(interval_3);
+		sube_salto = false;
+		baja_salto = false;
+		izquierda = false;
+		derecha = false;
 		var volver_inicio=document.getElementById('volverinicio');
 		console.log(volver_inicio);
+
 		volver_inicio.onclick=function(){
-			im.remove('visible');
-	    	im.add('invisible');
-			select[0].classList.remove('invisible');
-			select[0].classList.add('visible');
-			window.onload();
-		}
-	   
+		im.remove('visible');
+    	im.add('invisible');
+		select[0].classList.remove('invisible');
+		select[0].classList.add('visible');
+		window.onload();
+		}  
 	}
-
 }
-
-
-
+//----------DIBUJA MONIGOTE
 var monigote = function(){
 	
 	this.lado = 45;
@@ -390,8 +393,8 @@ var monigote = function(){
 			this.x = this.x + this.dx/2;
 		}
 	}
-	
 }
+//----------FUNCIÓN REPINTAR
 var repintar = function(){
 	ctx.clearRect(0,0,8000, 8000);
 	rectangulo_base();
@@ -415,9 +418,9 @@ var repintar = function(){
 	}
 	boton_pause();
 	empezarPause();
-
 }
 
+//----------FUNCIONES DE VÍDEO 
 var reanudar_video = function(){
 	console.log("play_video");
 	video.play();
