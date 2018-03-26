@@ -343,18 +343,18 @@ var muerte=function(){
 		izquierda = false;
 		derecha = false;
 		parar_video();
-		var puntuacion = document.getElementById("marcador");
+		/*var puntuacion = document.getElementById("marcador");
 		if (comparar()){
 			puntuacion.innerHTML = "PUNTOS: " + PT;
 			document.getElementById("winner").style.display="block";
 		}else{
 			puntuacion.innerHTML = "PUNTOS: " + PT;
-		}
+		}*/
 		var volver_inicio=document.getElementById('volverinicio');
 		console.log(volver_inicio);
 		volver_inicio.onclick=function(){
 		im.remove('visible');
-    	im.add('invisible');
+    		im.add('invisible');
 		select[0].classList.remove('invisible');
 		select[0].classList.add('visible');
 		window.onload();
