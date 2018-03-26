@@ -11,8 +11,15 @@ window.onload = function(){
 	no_choca = true;
 	vidas = 2; 
 	muerto = false;  
-	tiempo = 0; 
 	numero_diam = 0;
+	//CRONOMETRO
+	record1 =new Record();
+	to_compare=0;
+	si_empezado=false;
+	centesimas = 0;
+	segundos = 0;
+	minutos = 0;
+	horas = 0;
 	//DIBUJAR
 	color=document.getElementById('colores').value;//si no eligen nada lo ponemos negro por defecto
 	tamaño=10;
@@ -44,7 +51,6 @@ var init = function(){
 			cambiarPag(evt.target);
 		}
 	}
-
 	//JUEGO
 	canvas = document.getElementById("micanvas");
 	contenedor_canvas = document.getElementById("vd_container");
@@ -64,11 +70,10 @@ var init = function(){
 		interval_3 = setInterval(crear_bloque, tiempo_random_3);
 		tiempo_random_4 = Math.random()*1000+10000; //10 segundos para diamantes
 		interval_4 = setInterval(crear_diamante, tiempo_random_4);
-		interval_5 = setInterval(puntos, 10);
+		//interval_5 = setInterval(coger_diamante, 10);
+		interval_6 = setInterval(cronometro, 10);
 	}
-	
 }
-
 //PAGINA PRINCIPAL
 //----------CAMBIO DE PESTAÑAS 
 function cambiarPag(activo){
@@ -96,7 +101,6 @@ function cambiarPag(activo){
     }
     seleccionado.add('visible');
 }
-
 //DIBUJO
 //----------CANVAS DIBUJO 
 function dibujar(event){
@@ -118,7 +122,6 @@ function dibujar(event){
 					ctx2.closePath();
 					ctx2.stroke();
 				}
-
 			}else{//if cogergoma==true queremos que nos borre el camino, no que nos lo pinte en blanco
 				console.log('cogemos la goma');
 				ctx2.clearRect(posx,posy,tamaño,tamaño);
@@ -156,7 +159,6 @@ function guardar(){
 	sel.remove('invisible');
 	sel.add('visible');	
 }
-
 //JUEGO
 //----------RECONOCIMIENTO TECLADO 
 var movimiento_key_up = function(event){
@@ -170,7 +172,6 @@ var movimiento_key_up = function(event){
 		derecha = false;
 	}
 }
-
 var movimiento_key_down = function(event){
 	var keyCode = ('which' in event) ? event.which : event.keyCode;
 	//Salto
@@ -239,7 +240,6 @@ var pelota = function(){
 				this.pelotay=0;
 				muerte();
 			}
-		
 	}
 }
 //----------CREA BLOQUE
@@ -309,8 +309,10 @@ var diamante = function(){
 				console.log("cojo diamante");
 				this.diamx = 940; 
 				this.rnd = 100+Math.random()*200;
-				numero_diam = numero_diam+1; 
+				numero_diam = numero_diam+1000; 
 				console.log(numero_diam);
+				diams = document.getElementById("diamondsb");
+				diams.innerHTML = numero_diam;
 			}
 		}
 	}
@@ -335,15 +337,21 @@ var muerte=function(){
 		clearInterval(interval_3);
 		//clearInterval(interval_4);
 		//clearInterval(interval_5);
+		clearInterval(interval_6);
 		sube_salto = false;
 		baja_salto = false;
 		izquierda = false;
 		derecha = false;
+		parar_video();
 		var puntuacion = document.getElementById("marcador");
-		puntuacion.innerHTML = "PUNTOS: " + puntos();
+		if (comparar()){
+			puntuacion.innerHTML = "PUNTOS: " + PT;
+			document.getElementById("winner").style.display=block;
+		}else{
+			puntuacion.innerHTML = "PUNTOS: " + PT;
+		}
 		var volver_inicio=document.getElementById('volverinicio');
 		console.log(volver_inicio);
-
 		volver_inicio.onclick=function(){
 		im.remove('visible');
     	im.add('invisible');
@@ -355,7 +363,6 @@ var muerte=function(){
 }
 //----------DIBUJA MONIGOTE
 var monigote = function(){
-	
 	this.lado = 45;
 	this.x = 20;
 	this.y = 380-this.lado;
@@ -403,6 +410,54 @@ var monigote = function(){
 		}
 	}
 }
+//----------RECORD	
+var Record = function(){
+	this.name="x";
+	this.total=0;
+}
+//----------FUNCIÓN CRONOMETRO
+function cronometro () {
+	if (centesimas < 99) {
+		centesimas++;
+	}
+	if (centesimas == 99) {
+		centesimas = -1;
+	}
+	if (centesimas == 0) {
+		segundos ++;
+		if (segundos < 10) { segundos = "0"+segundos }
+		Segundos.innerHTML = ":"+segundos;
+	}
+	if (segundos == 59) {
+		segundos = -1;
+	}
+	if ( (centesimas == 0)&&(segundos == 0) ) {
+		minutos++;
+		if (minutos < 10) { minutos = "0"+minutos }
+		Minutos.innerHTML = ":"+minutos;
+	}
+	if (minutos == 59) {
+		minutos = -1;
+	}
+	if ( (centesimas == 0)&&(segundos == 0)&&(minutos == 0) ) {
+		horas ++;
+		if (horas < 10) { horas = "0"+horas }
+		Horas.innerHTML = horas;
+	}
+	to_compare++;
+	console.log("to compare="+to_compare);
+}
+//PUNTUACIÓN
+var comparar = function(){
+	PT=to_compare+numero_diam;
+	if (PT>record1.total){
+		record1.total=PT;
+		return true;
+	}else{
+		PT=0;
+		return false;
+	}
+}
 //----------FUNCIÓN REPINTAR
 var repintar = function(){
 	ctx.clearRect(0,0,8000, 8000);
@@ -428,17 +483,6 @@ var repintar = function(){
 	boton_pause();
 	empezarPause();
 }
-
-//PUNTUACIÓN
-//----------CONTADOR DE TIEMPO 
-var puntos = function(){
-		tiempo = tiempo+1; //en realidad son milisegundos
-		return tiempo + numero_diam*1000; 
-}
-
-
-
-
 //----------FUNCIONES DE VÍDEO 
 var reanudar_video = function(){
 	console.log("play_video");
@@ -448,11 +492,10 @@ var reanudar_video = function(){
 	interval_2 =setInterval(crear_pelota,tiempo_random_2);
 	interval_3 = setInterval(crear_bloque, tiempo_random_3);
 	interval_4 = setInterval(crear_diamante, tiempo_random_4);
-	interval_5 = setInterval (puntos,1);
+	//interval_5 = setInterval(diamante1.coger_diamante, 10);
+	interval_6 = setInterval(cronometro,10);
 	boton_pause();
-	
 }
-
 var parar_video = function(){
 	console.log("onkeydown");
 	console.log(contenedor_boton_pause);
@@ -462,13 +505,11 @@ var parar_video = function(){
 	clearInterval(interval_2);//pelota
 	clearInterval(interval_3);//bloque
 	clearInterval(interval_4);//diamante
-	clearInterval(interval_5);//contador de puntos
+	//clearInterval(interval_5);//puntos diamante
+	clearInterval(interval_6);//cronometro
 	boton_pause();	
-	console.log("puntos = "+tiempo);
-	console.log("numero diamantes: "+numero_diam);
-
+	console.log("puntos = "+numero_diam);
 }
-
 var boton_pause = function(){
 	var boton_play = document.getElementById("button_play");
 	var boton_pause = document.getElementById("button_pause");
@@ -487,18 +528,26 @@ var boton_pause = function(){
 		boton_pause.style.display = "none";
 	}	
 }
-
 function empezarPause(){//para que empiece estando en pause hasta que nos metamos en el juego
 	if(select[1].classList.contains('invisible')){
 		parar_video();
 	}
 }
-
 var refresh = function(){
 	clearInterval(interval_1);
 	clearInterval(interval_2);
 	clearInterval(interval_3);
 	clearInterval(interval_4);
-	clearInterval(interval_5);
+	//clearInterval(interval_5);
+	clearInterval(interval_6);
+	centesimas = 0;
+	segundos = 0;
+	minutos = 0;
+	horas = 0;
+	Centesimas.innerHTML = ":00";
+	Segundos.innerHTML = ":00";
+	Minutos.innerHTML = ":00";
+	Horas.innerHTML = "00";
+	si_empezado=false;
 	window.onload();
 }
