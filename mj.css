@@ -157,6 +157,18 @@ header{
     background-size: 120px 120px;
     background-repeat: no-repeat;
 }
+#button_refresh_1_muerte {
+    background-color: grey;
+    margin-top: 20%;
+    margin-left: 15%;
+    min-height: 20%;
+    min-width: 10%;
+    background-image: url("logo_refresh.png");
+    border-color: transparent;;
+    background-position: center;
+    background-size: 120px 120px;
+    background-repeat: no-repeat;
+}
 #button_refresh_2 {
     margin-top: 0.5%;
     min-height: 10%;

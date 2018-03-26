@@ -188,6 +188,11 @@ var movimiento_key_down = function(event){
 		derecha = true;
 		izquierda = false;
 	}
+	//Abajo
+	if(keyCode==40){
+		sube_salto = false;
+		baja_salto = true;
+	}
 	//Parar Video
 	if(keyCode==32 && video_run==true){
 		parar_video();
@@ -306,6 +311,8 @@ var diamante = function(){
 		centro_y = this.rnd+20;
 		if(centro_x>monigote1.x && centro_x<(monigote1.x+monigote1.lado)){
 			if(centro_y>monigote1.y && centro_y<(monigote1.y+monigote1.lado)){
+				var audio_diamante = new Audio('diamante.mp3');
+				audio_diamante.play();
 				console.log("cojo diamante");
 				this.diamx = 940; 
 				this.rnd = 100+Math.random()*200;
@@ -331,8 +338,10 @@ var muerte=function(){
 
 	}else if(vidas==0){
 		console.log('has muerto');
+		var audio_muerte = new Audio('Mario_Game_Over.mp3');
+		audio_muerte.play();
 		muerto==true;
-	    var im= document.getElementById('muerte').classList;
+	    im= document.getElementById('muerte').classList;
 	    select[1].classList.remove('visible');
 	    select[1].classList.add('invisible');
 	    im.remove('invisible');
@@ -388,17 +397,18 @@ var monigote = function(){
 		if(this.y>50 && sube_salto==true){
 			console.log("subir");
 			//console.log("1: "+this.y);
-			this.y = this.y - this.dy/2;
+			this.y = this.y - this.dy;
 			//console.log("2: "+this.y);
 
 			sube_salto = true;
 			baja_salto = false;
 		}			
 		else{
-			if(this.y<=(335-this.lado)||baja_salto==true){
+			console.log(this.y);
+			if(this.y<=(380-this.lado)||baja_salto==true){
 				console.log("bajar");		
-				if(this.y<(335-this.lado)){
-					this.y = this.y + this.dy/2;
+				if(this.y<(380-this.lado)){
+					this.y = this.y + this.dy;
 						baja_salto = true;
 						sube_salto = false;
 				}else{
@@ -578,5 +588,13 @@ var refresh = function(){
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
 	si_empezado=false;
+	video.play();
 	window.onload();
+}
+var refresh_muerte = function(){
+	im.remove('visible');
+    im.add('invisible');
+    cambiarPag(1);
+    refresh();
+    video.play();
 }
