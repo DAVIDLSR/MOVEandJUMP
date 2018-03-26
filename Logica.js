@@ -346,7 +346,7 @@ var muerte=function(){
 		var puntuacion = document.getElementById("marcador");
 		if (comparar()){
 			puntuacion.innerHTML = "PUNTOS: " + PT;
-			document.getElementById("winner").style.display=block;
+			document.getElementById("winner").style.display="block";
 		}else{
 			puntuacion.innerHTML = "PUNTOS: " + PT;
 		}
