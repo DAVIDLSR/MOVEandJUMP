@@ -27,6 +27,57 @@ header{
    margin:auto;
 }
 /***************************** JUEGO *****************************/
+.vidas{
+    position:absolute;
+    top:20%;
+    right:12%;
+}
+#diamondsa{
+    position:absolute;
+    top:87%;
+    right:17%;
+    font-size: 17px;
+    font-family: Courier,sans-serif;
+}
+#diamondsb{
+    position:absolute;
+    top:87%;
+    right:12%;
+    font-size: 17px;
+    font-family: Courier,sans-serif;
+}
+#cronometro{
+    position:absolute;
+    top:15%;
+    right:12%;
+    width:540px;
+    height:115px;
+}
+.reloj{
+    float: left;
+    font-size: 17px;
+    font-family: Courier,sans-serif;
+    color: white;
+}
+.boton{
+    outline: none;
+    border: 1px solid #363431;
+    color: white;
+    width: 128px;
+    height: 30px;
+    text-shadow: 0px -1px 1px black;
+    font-size: 20px;
+    border-radius: 5px;
+    font-family: Helvetica;
+    cursor: pointer;
+    background-image: linear-gradient(#3aad02,#2c6f05);
+}
+.boton:active{
+    background-image: linear-gradient(#2c6f05,#3aad02);
+}
+.boton:hover{
+    box-shadow: 0px 0px 14px #3aad02;
+}
 #vd_container{
     /*background-color: grey;*/
     margin-top: 10%;
@@ -81,7 +132,6 @@ header{
     background-size: 100px 100px;
     background-repeat: no-repeat;
 }
-
 #button_pause {
     margin-top: 4%;
     margin-left: 15%;
@@ -129,7 +179,6 @@ header{
     position:fixed;
     margin-top: 23%;
     margin-left: 20%;
-
 }
 #volverinicio{
     margin-top: 13%;
@@ -155,7 +204,19 @@ header{
     color: tomato;
     border: dotted 2px red;
 }
-
+#winner{
+    display:none;
+    margin-top: 12%;
+    margin-left: 2%;
+    position:fixed;
+    background-color: slategray;
+    font-family: courier new; 
+    font-weight: bold; 
+    font-size: 30px; 
+    padding: 2%;
+    color: tomato;
+    border: dotted 2px red;
+}
 /****************************** MENU ******************************/
 #contenedor{
     width:300px;
@@ -189,13 +250,13 @@ header{
 }
 .menu:hover .menu-contenido {
     display:block;
-}
+}/*
 .menu:hover .boton { 
     color:black;
  }
 .menu:hover .dropdown {
     background-color:black;
-}
+}*/
 .visible{
     display:block;
 }
