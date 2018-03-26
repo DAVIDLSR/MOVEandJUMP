@@ -320,10 +320,15 @@ var diamante = function(){
 //----------FUNCION MUERTE (2 VIDAS)
 var muerte=function(){
 	vidas--;
+	var corazon = document.getElementsByClassName("fa fa-heart");
+
 	if(vidas==1){
 		console.log('te queda una vida');
 		monigote1.lado=70;
 		monigote1.y = 310; 
+		corazon[vidas].classList.remove("visible");
+		corazon[vidas].classList.add("invisible");
+
 	}else if(vidas==0){
 		console.log('has muerto');
 		muerto==true;
@@ -342,6 +347,8 @@ var muerte=function(){
 		baja_salto = false;
 		izquierda = false;
 		derecha = false;
+		corazon[vidas].classList.remove("visible");
+		corazon[vidas].classList.add("invisible");
 		parar_video();
 		/*var puntuacion = document.getElementById("marcador");
 		if (comparar()){
@@ -354,7 +361,7 @@ var muerte=function(){
 		console.log(volver_inicio);
 		volver_inicio.onclick=function(){
 		im.remove('visible');
-    		im.add('invisible');
+    	im.add('invisible');
 		select[0].classList.remove('invisible');
 		select[0].classList.add('visible');
 		window.onload();
