@@ -417,6 +417,29 @@ var monigote = function(){
 		}
 	}
 }
+//------ANUNCIO EN MEDIO DEL VIDEO
+var anuncio=function(event){
+	var tiempo=event.currentTime;
+	console.log('segundoa:'+tiempo)
+	if (tiempo>=10.000000 && tiempo<10.4){
+		parar_video();
+		select[1].classList.remove('visible');
+		select[1].classList.add('invisible');
+		cont_anuncio=document.getElementById('anuncio');
+		video_anuncio=document.getElementById('video_anuncio');
+		cont_anuncio.classList.remove('invisible');
+		cont_anuncio.classList.add('visible');
+		video_anuncio.play();
+	}
+}
+var terminar_anuncio=function(){
+		console.log('termina anuncio');
+		cont_anuncio.classList.remove('visible');
+		cont_anuncio.classList.add('invisible');
+		select[1].classList.remove('invisible');
+		select[1].classList.add('visible');
+		reanudar_video();
+}
 //----------RECORD	
 var Record = function(){
 	this.name="x";
