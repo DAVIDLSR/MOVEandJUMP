@@ -34,7 +34,6 @@ header{
     left:17%;
 }
 #diamondsa{
-    background-color: yellow;
     position:absolute;
     top:87%;
     right:17%;
@@ -42,7 +41,6 @@ header{
     font-family: Courier,sans-serif;
 }
 #diamondsb{
-    background-color: green;
     position:absolute;
     top:90%;
     right:17%;
