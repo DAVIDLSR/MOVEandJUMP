@@ -544,7 +544,6 @@ var refresh = function(){
 	segundos = 0;
 	minutos = 0;
 	horas = 0;
-	Centesimas.innerHTML = ":00";
 	Segundos.innerHTML = ":00";
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
