@@ -7,10 +7,8 @@
   <style type="text/css" media="screen">@import 'mj.css';</style>
   <script type="text/javascript" src="logica.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
 </head>
 <body>
-  
 <!--MENU-->
 <nav id="contenedor">
   <div class="menu">
@@ -23,8 +21,6 @@
     </div>
   </div>
 </nav>
-
-
 <!--PAGINA PRINCIPAL-->
   <section id="Principal" class="visible">
     <header>
@@ -35,7 +31,6 @@
       <p>Informacion de contacto<a href="mailto:100346265@alumnos.uc3m.es">100346265@alumnos.uc3m.es </a> </p>
   </footer>
   </section>
-
 <!--VIDEO FONDO JUEGO-->
   <section id="Juego" class="invisible">
     <div id="vd_container" width="940px">
@@ -53,12 +48,28 @@
       <button id="button_refresh_1" onclick="refresh()"></button>
       <button id="button_refresh_2" onclick="refresh()"></button>
     </div>
+    <div class="vidas">
+      <div value="0"><i class="fa fa-heart"></i></div>
+      <div value="1"><i class="fa fa-heart"></i></div>
+    </div>
+    <div id="diamondsa"><i class="fa fa-diamond"></i></div>
+    <div id="diamondsb"></div>
+    <div id="muerte"  class="invisible">
+      <div id = marcador> </div>
+      <img src="game_over.png" id="gameover" width="500" height="400">
+      <div id="winner">
+        <h3> ¡ENHORABUENA HAS BATIDO EL RECORD!<br></br> Inserta tu nombre para que podamos guardarte. </h3>
+        <input type="text" size="15" maxlenght="30" value="Nombre" name="nombre_record">
+      </div>
+      <button id="volverinicio"></button>
+    </div>
+     <!--CRONOMETRO--> 
+     <div id="cronometro">
+      <h5 class="reloj" id="Horas">00</h5>
+      <h5 class="reloj" id="Minutos">:00</h5>
+      <h5 class="reloj" id="Segundos">:00</h5>
+     </div>
   </section>
-  <div id="muerte"  class="invisible">
-    <div id = marcador> </div>
-    <img src="game_over.png" id="gameover" width="500" height="400">
-    <button id="volverinicio"></button>
-  </div>
 <!--DIBUJO-->
   <section id="Dibujo" class="invisible">
     <div id="dibujocanvas">
@@ -72,7 +83,6 @@
       <canvas id="micanvas2" height="200" width="300"/>
     </div>
   </section>
-
  <!--INSTRUCCIONES-->
   <section id="Informacion" class="invisible">
     <div id="cuadro">
@@ -81,7 +91,5 @@
       <p> En este juego deberas esquivar los objetos que caen. Para ello puedes saltar y moverte ayudandote de los siguientes controles:</p>
     </div>
   </section>
-
-
 </body>
 </html>
