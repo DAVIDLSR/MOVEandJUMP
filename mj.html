@@ -34,7 +34,7 @@
 <!--VIDEO FONDO JUEGO-->
   <section id="Juego" class="invisible">
     <div id="vd_container" width="940px">
-      <video id="mivideo" autoplay loop muted>
+      <video id="mivideo" autoplay loop muted ontimeupdate="anuncio(this)">
         <source src="videoplayback.mp4" type="video/mp4"></source>
         Tu navegador no puede reproducir archivos mp4.
       </video>
