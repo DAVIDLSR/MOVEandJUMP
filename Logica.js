@@ -60,6 +60,7 @@ var init = function(){
 		canvas.setAttribute("width", "940");
 		canvas.setAttribute("height", "528");		
 		monigote1 = new monigote();
+		corazon = document.getElementsByClassName("fa fa-heart");
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
@@ -73,6 +74,7 @@ var init = function(){
 		//interval_5 = setInterval(coger_diamante, 10);
 		interval_6 = setInterval(cronometro, 10);
 	}
+
 }
 //PAGINA PRINCIPAL
 //----------CAMBIO DE PESTAÑAS 
@@ -313,11 +315,11 @@ var diamante = function(){
 			if(centro_y>monigote1.y && centro_y<(monigote1.y+monigote1.lado)){
 				var audio_diamante = new Audio('diamante.mp3');
 				audio_diamante.play();
-				console.log("cojo diamante");
+				//console.log("cojo diamante");
 				this.diamx = 940; 
 				this.rnd = 100+Math.random()*200;
 				numero_diam = numero_diam+1000; 
-				console.log(numero_diam);
+				//console.log(numero_diam);
 				diams = document.getElementById("diamondsb");
 				diams.innerHTML = numero_diam;
 			}
@@ -326,9 +328,8 @@ var diamante = function(){
 }
 //----------FUNCION MUERTE (2 VIDAS)
 var muerte=function(){
-	vidas--;
-	var corazon = document.getElementsByClassName("fa fa-heart");
 
+	vidas--;
 	if(vidas==1){
 		console.log('te queda una vida');
 		monigote1.lado=70;
@@ -338,7 +339,7 @@ var muerte=function(){
 
 	}else if(vidas==0){
 		console.log('has muerto');
-		var audio_muerte = new Audio('Mario_Game_Over.mp3');
+		audio_muerte = new Audio('Mario_Game_Over.mp3');
 		audio_muerte.play();
 		muerto==true;
 	    im= document.getElementById('muerte').classList;
@@ -366,15 +367,17 @@ var muerte=function(){
 		}else{
 			puntuacion.innerHTML = "PUNTOS: " + PT;
 		}*/
-		var volver_inicio=document.getElementById('volverinicio');
-		console.log(volver_inicio);
+		/*var volver_inicio=document.getElementById('volverinicio');
 		volver_inicio.onclick=function(){
-		im.remove('visible');
-    	im.add('invisible');
-		select[0].classList.remove('invisible');
-		select[0].classList.add('visible');
-		window.onload();
-		}  
+			console.log(volver_inicio);
+			im.remove('visible');
+	    	im.add('invisible');
+	    	console.log(select[0]);
+			select[0].classList.remove('invisible');
+			select[0].classList.add('visible');
+			window.onload();
+
+		}  */
 	}
 }
 //----------DIBUJA MONIGOTE
@@ -395,7 +398,7 @@ var monigote = function(){
 	}
 	this.saltar_monigote = function(){
 		if(this.y>50 && sube_salto==true){
-			console.log("subir");
+			//console.log("subir");
 			//console.log("1: "+this.y);
 			this.y = this.y - this.dy;
 			//console.log("2: "+this.y);
@@ -404,9 +407,9 @@ var monigote = function(){
 			baja_salto = false;
 		}			
 		else{
-			console.log(this.y);
+			//console.log(this.y);
 			if(this.y<=(380-this.lado)||baja_salto==true){
-				console.log("bajar");		
+				//console.log("bajar");		
 				if(this.y<(380-this.lado)){
 					this.y = this.y + this.dy;
 						baja_salto = true;
@@ -436,10 +439,10 @@ var anuncio=function(event){
 		select[1].classList.remove('visible');
 		select[1].classList.add('invisible');
 		cont_anuncio=document.getElementById('anuncio');
-		video_anuncio=document.getElementById('video_anuncio');
+		vid_anuncio=document.getElementById('video_anuncio');
 		cont_anuncio.classList.remove('invisible');
 		cont_anuncio.classList.add('visible');
-		video_anuncio.play();
+		vid_anuncio.play();
 	}
 }
 var terminar_anuncio=function(){
@@ -485,7 +488,7 @@ function cronometro () {
 		Horas.innerHTML = horas;
 	}
 	to_compare++;
-	console.log("to compare="+to_compare);
+	//console.log("to compare="+to_compare);
 }
 //PUNTUACIÓN
 var comparar = function(){
@@ -588,13 +591,14 @@ var refresh = function(){
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
 	si_empezado=false;
-	video.play();
 	window.onload();
 }
 var refresh_muerte = function(){
 	im.remove('visible');
-    im.add('invisible');
-    cambiarPag(1);
-    refresh();
-    video.play();
+	im.add('invisible');
+	cambiarPag(1);
+	audio_muerte.load();
+	audio_muerte.pause();
+	refresh();
+	video.play();
 }
