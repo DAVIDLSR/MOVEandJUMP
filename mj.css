@@ -173,8 +173,8 @@ header{
 }
 #button_refresh_1_muerte {
     background-color: transparent;
-    margin-top: 20%;
-    margin-left: 15%;
+    margin-top: 5%;
+    margin-left: 40%;
     min-height: 15%;
     min-width: 10%;
     background-image: url("logo_refresh.png");
@@ -208,7 +208,7 @@ header{
     margin-left: 20%;
 }
 #volverinicio{
-    margin-top: 10%;
+    margin-top: 7%;
     margin-left: 23%;
     min-height: 20%;
     min-width: 10%;
