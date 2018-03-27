@@ -12,6 +12,11 @@ window.onload = function(){
 	vidas = 2; 
 	muerto = false;  
 	numero_diam = 0;
+	im= document.getElementById('muerte').classList;
+	cont_anuncio=document.getElementById('anuncio');
+	vid_anuncio=document.getElementById('video_anuncio');
+	sale_anuncio=false;
+	acaba_anuncio=false;
 	//CRONOMETRO
 	record1 =new Record();
 	to_compare=0;
@@ -79,6 +84,14 @@ var init = function(){
 //PAGINA PRINCIPAL
 //----------CAMBIO DE PESTAÑAS 
 function cambiarPag(activo){
+	if(cont_anuncio.classList.contains('visible')){
+		cont_anuncio.classList.remove('visible');
+		cont_anuncio.classList.add('invisible');
+	}
+	if(im.contains('visible')){
+		im.remove('visible');
+		im.add('invisible');
+	}
 	 for(var i=0;i<elem.length;i++){//con este bucle detectamos los que hemos pulsado y los que no
         if(activo==elem[i]){
             eleccion=i;
@@ -342,7 +355,6 @@ var muerte=function(){
 		audio_muerte = new Audio('Mario_Game_Over.mp3');
 		audio_muerte.play();
 		muerto==true;
-	    im= document.getElementById('muerte').classList;
 	    select[1].classList.remove('visible');
 	    select[1].classList.add('invisible');
 	    im.remove('invisible');
@@ -367,17 +379,17 @@ var muerte=function(){
 		}else{
 			puntuacion.innerHTML = "PUNTOS: " + PT;
 		}*/
-		/*var volver_inicio=document.getElementById('volverinicio');
+		var volver_inicio=document.getElementById('volverinicio');
 		volver_inicio.onclick=function(){
-			console.log(volver_inicio);
 			im.remove('visible');
 	    	im.add('invisible');
 	    	console.log(select[0]);
 			select[0].classList.remove('invisible');
 			select[0].classList.add('visible');
-			window.onload();
-
-		}  */
+			refresh();
+			
+		}  
+		window.onload();
 	}
 }
 //----------DIBUJA MONIGOTE
@@ -434,24 +446,23 @@ var monigote = function(){
 var anuncio=function(event){
 	var tiempo=event.currentTime;
 	console.log('segundoa:'+tiempo)
-	if (tiempo>=10.000000 && tiempo<10.4){
+	if (tiempo>=40 && tiempo<41 && sale_anuncio==false){
 		parar_video();
 		select[1].classList.remove('visible');
 		select[1].classList.add('invisible');
-		cont_anuncio=document.getElementById('anuncio');
-		vid_anuncio=document.getElementById('video_anuncio');
 		cont_anuncio.classList.remove('invisible');
 		cont_anuncio.classList.add('visible');
 		vid_anuncio.play();
+		sale_anuncio=true;
 	}
 }
-var terminar_anuncio=function(){
-		console.log('termina anuncio');
-		cont_anuncio.classList.remove('visible');
-		cont_anuncio.classList.add('invisible');
-		select[1].classList.remove('invisible');
-		select[1].classList.add('visible');
-		reanudar_video();
+var terminar_anuncio=function(event){
+		if(event.currentTime>30 && event.currentTime<31 && acaba_anuncio==false){
+			video_anuncio.pause();
+			cambiarPag(1);
+			reanudar_video();
+			acaba_anuncio=true;
+		}
 }
 //----------RECORD	
 var Record = function(){
@@ -590,12 +601,11 @@ var refresh = function(){
 	Segundos.innerHTML = ":00";
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
+	video.currentTime=0;
 	si_empezado=false;
 	window.onload();
 }
 var refresh_muerte = function(){
-	im.remove('visible');
-	im.add('invisible');
 	cambiarPag(1);
 	audio_muerte.load();
 	audio_muerte.pause();
