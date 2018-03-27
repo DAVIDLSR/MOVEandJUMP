@@ -79,6 +79,20 @@ header{
 .boton:hover{
     box-shadow: 0px 0px 14px #3aad02;
 }
+#anuncio{
+    margin-top: 10%;
+    position:fixed;
+    height: 528px;
+    width: 940px;
+    overflow:hidden;
+    padding-left: 15%;
+    padding-right: 15%;
+    z-index: -20;
+}
+#video_anuncio{
+    height: 528px;
+    width: 940px;
+}
 #vd_container{
     /*background-color: grey;*/
     margin-top: 10%;
@@ -152,19 +166,19 @@ header{
     min-width: 10%;
     background-image: url("logo_refresh.png");
     background-color: transparent;
-    border-color: transparent;;
+    border-color: transparent;
     background-position: center;
     background-size: 120px 120px;
     background-repeat: no-repeat;
 }
 #button_refresh_1_muerte {
-    background-color: grey;
+    background-color: transparent;
     margin-top: 20%;
     margin-left: 15%;
-    min-height: 20%;
+    min-height: 15%;
     min-width: 10%;
     background-image: url("logo_refresh.png");
-    border-color: transparent;;
+    border: solid 5px tomato;
     background-position: center;
     background-size: 120px 120px;
     background-repeat: no-repeat;
