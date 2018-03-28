@@ -220,21 +220,8 @@ header{
     background-repeat: no-repeat;
 }
 #marcador{
-    margin-top: 12%;
-    margin-left: 28%;
-    position:fixed;
-    background-color: slategray;
-    font-family: courier new; 
-    font-weight: bold; 
-    font-size: 30px; 
-    padding: 2%;
-    color: tomato;
-    border: dotted 2px red;
-}
-#winner{
-    display:none;
-    margin-top: 12%;
-    margin-left: 2%;
+    margin-top: 10%;
+    margin-left: 30%;
     position:fixed;
     background-color: slategray;
     font-family: courier new; 
@@ -322,4 +309,3 @@ footer a:link {
 #dibujocanvas p{
     color:white;
 }
-
