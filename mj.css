@@ -174,13 +174,13 @@ header{
 #button_refresh_1_muerte {
     background-color: transparent;
     margin-top: 5%;
-    margin-left: 40%;
+    margin-left: 33%;
     min-height: 15%;
     min-width: 10%;
-    background-image: url("logo_refresh.png");
-    border: solid 5px tomato;
+    border-color: transparent;
+    background-image: url("logo_refresh_2.png");
     background-position: center;
-    background-size: 120px 120px;
+    background-size: 70px 70px;
     background-repeat: no-repeat;
 }
 #button_refresh_2 {
@@ -322,3 +322,4 @@ footer a:link {
 #dibujocanvas p{
     color:white;
 }
+
