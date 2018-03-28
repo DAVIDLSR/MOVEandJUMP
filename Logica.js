@@ -4,7 +4,9 @@ window.onload = function(){
 	baja_salto = false;
 	izquierda = false;
 	derecha = false;
+	cronometro_run=false;
 	video_run = true;
+	cancion_run = true;
 	array_blq = [];
 	array_pel=[];
 	array_diam=[];
@@ -20,7 +22,6 @@ window.onload = function(){
 	acaba_anuncio=false;
 
 	//CRONOMETRO
-	record1 =new Record();
 	to_compare=0;
 	si_empezado=false;
 	centesimas = 0;
@@ -63,15 +64,14 @@ var init = function(){
 	contenedor_canvas = document.getElementById("vd_container");
 	video = document.getElementById("mivideo");
 	contenedor_boton_pause = document.getElementById("div_pause");
+	cancion = document.getElementById("micancion");
+	contenedor_boton_pause = document.getElementById("div_pause");
 
 	if(canvas && canvas.getContext){
 		canvas.setAttribute("width", "940");
 		canvas.setAttribute("height", "528");		
 		monigote1 = new monigote();
 		corazon = document.getElementsByClassName("fa fa-heart");
-		//console.log(corazon);
-		//console.log("vidas"+vidas)
-		//console.log(corazon[vidas-1])
 		
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
@@ -84,11 +84,9 @@ var init = function(){
 		tiempo_random_4 = Math.random()*1000+10000; //10 segundos para diamantes
 		interval_4 = setInterval(crear_diamante, tiempo_random_4);
 		//interval_5 = setInterval(coger_diamante, 10);
-		interval_6 = setInterval(cronometro, 10);
+		interval_5 = setInterval(cronometro, 10);
 	}
-
 }
-//PAGINA PRINCIPAL
 //----------CAMBIO DE PESTAÑAS 
 function cambiarPag(activo){
 	if(cont_anuncio.classList.contains('visible')){
@@ -371,7 +369,7 @@ var muerte=function(){
 		clearInterval(interval_3);
 		//clearInterval(interval_4);
 		//clearInterval(interval_5);
-		clearInterval(interval_6);
+		clearInterval(interval_5);
 		sube_salto = false;
 		baja_salto = false;
 		izquierda = false;
@@ -379,13 +377,9 @@ var muerte=function(){
 		corazon[vidas].classList.remove("visible");
 		corazon[vidas].classList.add("invisible");
 		parar_video();
-		/*var puntuacion = document.getElementById("marcador");
-		if (comparar()){
-			puntuacion.innerHTML = "PUNTOS: " + PT;
-			document.getElementById("winner").style.display="block";
-		}else{
-			puntuacion.innerHTML = "PUNTOS: " + PT;
-		}*/
+		var puntuacion = document.getElementById("marcador");
+		PT=to_compare+numero_diam;
+		puntuacion.innerHTML = "PUNTOS: " + PT;
 		var volver_inicio=document.getElementById('volverinicio');
 		volver_inicio.onclick=function(){
 			game_over.remove('visible');
@@ -451,7 +445,7 @@ var monigote = function(){
 //------ANUNCIO EN MEDIO DEL VIDEO
 var anuncio=function(event){
 	var tiempo=event.currentTime;
-	//console.log('segundoa:'+tiempo)
+	//console.log('segundos:'+tiempo)
 	if (tiempo>=40 && tiempo<41 && sale_anuncio==false){
 		parar_video();
 		select[1].classList.remove('visible');
@@ -469,11 +463,6 @@ var terminar_anuncio=function(event){
 			reanudar_video();
 			acaba_anuncio=true;
 		}
-}
-//----------RECORD	
-var Record = function(){
-	this.name="x";
-	this.total=0;
 }
 //----------FUNCIÓN CRONOMETRO
 function cronometro () {
@@ -507,16 +496,8 @@ function cronometro () {
 	to_compare++;
 	//console.log("to compare="+to_compare);
 }
-//PUNTUACIÓN
-var comparar = function(){
-	PT=to_compare+numero_diam;
-	if (PT>record1.total){
-		record1.total=PT;
-		return true;
-	}else{
-		PT=0;
-		return false;
-	}
+var cronometro_stop = function(){
+
 }
 //----------FUNCIÓN REPINTAR
 var repintar = function(){
@@ -547,26 +528,29 @@ var repintar = function(){
 var reanudar_video = function(){
 	console.log("play_video");
 	video.play();
+	cancion.play();
 	video_run=true;
+	cancion_run=true;
+	cronometro_run=true;
 	interval_1 = setInterval(repintar,10);
 	interval_2 =setInterval(crear_pelota,tiempo_random_2);
 	interval_3 = setInterval(crear_bloque, tiempo_random_3);
 	interval_4 = setInterval(crear_diamante, tiempo_random_4);
-	//interval_5 = setInterval(diamante1.coger_diamante, 10);
-	interval_6 = setInterval(cronometro,10);
+	interval_5 = setInterval(cronometro,10);
 	boton_pause();
 }
 var parar_video = function(){
 	console.log("onkeydown");
 	console.log(contenedor_boton_pause);
 	video.pause();
+	cancion.pause();
 	video_run=false;
+	cancion_run=false;
 	clearInterval(interval_1);//repintar
 	clearInterval(interval_2);//pelota
 	clearInterval(interval_3);//bloque
 	clearInterval(interval_4);//diamante
-	//clearInterval(interval_5);//puntos diamante
-	clearInterval(interval_6);//cronometro
+	clearInterval(interval_5);//cronometro
 	boton_pause();	
 	console.log("puntos = "+numero_diam);
 }
@@ -598,17 +582,17 @@ var refresh = function(){
 	clearInterval(interval_2);
 	clearInterval(interval_3);
 	clearInterval(interval_4);
-	//clearInterval(interval_5);
-	clearInterval(interval_6);
+	clearInterval(interval_5);
 	centesimas = 0;
 	segundos = 0;
 	minutos = 0;
 	horas = 0;
+	diams.innerHTML = null;
 	Segundos.innerHTML = ":00";
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
 	video.currentTime=0;
-	si_empezado=false;
+	cronometro_run=false;
 	//para que al refrescar salgan de nuevo los corazones (vidas)
 	for(var i=0; i<vidas; i++){
 		corazon[i].classList.remove("invisible");
