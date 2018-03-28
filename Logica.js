@@ -12,11 +12,13 @@ window.onload = function(){
 	vidas = 2; 
 	muerto = false;  
 	numero_diam = 0;
-	im= document.getElementById('muerte').classList;
+	game_over= document.getElementById('muerte').classList;
 	cont_anuncio=document.getElementById('anuncio');
 	vid_anuncio=document.getElementById('video_anuncio');
+
 	sale_anuncio=false;
 	acaba_anuncio=false;
+
 	//CRONOMETRO
 	record1 =new Record();
 	to_compare=0;
@@ -61,11 +63,16 @@ var init = function(){
 	contenedor_canvas = document.getElementById("vd_container");
 	video = document.getElementById("mivideo");
 	contenedor_boton_pause = document.getElementById("div_pause");
+
 	if(canvas && canvas.getContext){
 		canvas.setAttribute("width", "940");
 		canvas.setAttribute("height", "528");		
 		monigote1 = new monigote();
 		corazon = document.getElementsByClassName("fa fa-heart");
+		//console.log(corazon);
+		//console.log("vidas"+vidas)
+		//console.log(corazon[vidas-1])
+		
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
@@ -88,9 +95,9 @@ function cambiarPag(activo){
 		cont_anuncio.classList.remove('visible');
 		cont_anuncio.classList.add('invisible');
 	}
-	if(im.contains('visible')){
-		im.remove('visible');
-		im.add('invisible');
+	if(game_over.contains('visible')){
+		game_over.remove('visible');
+		game_over.add('invisible');
 	}
 	 for(var i=0;i<elem.length;i++){//con este bucle detectamos los que hemos pulsado y los que no
         if(activo==elem[i]){
@@ -357,8 +364,8 @@ var muerte=function(){
 		muerto==true;
 	    select[1].classList.remove('visible');
 	    select[1].classList.add('invisible');
-	    im.remove('invisible');
-	    im.add('visible');
+	    game_over.remove('invisible');
+	    game_over.add('visible');
 	    clearInterval(interval_1);
 		clearInterval(interval_2);
 		clearInterval(interval_3);
@@ -381,13 +388,12 @@ var muerte=function(){
 		}*/
 		var volver_inicio=document.getElementById('volverinicio');
 		volver_inicio.onclick=function(){
-			im.remove('visible');
-	    	im.add('invisible');
+			game_over.remove('visible');
+	    	game_over.add('invisible');
 	    	console.log(select[0]);
 			select[0].classList.remove('invisible');
 			select[0].classList.add('visible');
 			refresh();
-			
 		}  
 		window.onload();
 	}
@@ -445,7 +451,7 @@ var monigote = function(){
 //------ANUNCIO EN MEDIO DEL VIDEO
 var anuncio=function(event){
 	var tiempo=event.currentTime;
-	console.log('segundoa:'+tiempo)
+	//console.log('segundoa:'+tiempo)
 	if (tiempo>=40 && tiempo<41 && sale_anuncio==false){
 		parar_video();
 		select[1].classList.remove('visible');
@@ -603,12 +609,18 @@ var refresh = function(){
 	Horas.innerHTML = "00";
 	video.currentTime=0;
 	si_empezado=false;
+	//para que al refrescar salgan de nuevo los corazones (vidas)
+	for(var i=0; i<vidas; i++){
+		corazon[i].classList.remove("invisible");
+		corazon[i].classList.add("visible");
+	}
+	console.log("parar audio");
+	audio_muerte.load();
+	audio_muerte.pause();
 	window.onload();
 }
 var refresh_muerte = function(){
 	cambiarPag(1);
-	audio_muerte.load();
-	audio_muerte.pause();
 	refresh();
 	video.play();
 }
