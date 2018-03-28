@@ -38,6 +38,9 @@
         <source src="videoplayback.mp4" type="video/mp4"></source>
         Tu navegador no puede reproducir archivos mp4.
       </video>
+      <audio id="micancion" src="GameSong.mp3" type="audio/mp3;" autoplay loop ontimeupdate="anuncio(this)">
+        Aquí podemos poner un texto para navegadores no compatibles
+      </audio>
     </div>
     <div id="content">
       <canvas id="micanvas"></canvas> 
@@ -63,17 +66,13 @@
      </div>
   </section>
   <div id="muerte"  class="invisible">
-     <!-- <div id = marcador> </div>-->
+     <div id = marcador> </div>
       <img src="game_over.png" id="gameover" width="500" height="400">
-     <!-- <div id="winner">
-        <h3> ¡ENHORABUENA HAS BATIDO EL RECORD!<br></br> Inserta tu nombre para que podamos guardarte. </h3>
-        <input type="text" size="15" maxlenght="30" value="Nombre" name="nombre_record">
-      </div>-->
        <button id="volverinicio"></button>
       <button id="button_refresh_1_muerte" onclick="refresh_muerte()"></button>
   </div>
   <div id="anuncio" class="invisible" width="940px">
-    <video id="video_anuncio" loop muted ontimeupdate="terminar_anuncio(this)">
+    <video id="video_anuncio" loop ontimeupdate="terminar_anuncio(this)">
       <source src="anuncio.mp4" type="video/mp4"></source>
     </video>
   </div>
