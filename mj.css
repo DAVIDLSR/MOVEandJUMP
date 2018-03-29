@@ -173,7 +173,7 @@ header{
 }
 #button_refresh_1_muerte {
     background-color: transparent;
-    margin-top: 5%;
+    margin-top: 8%;
     margin-left: 33%;
     min-height: 15%;
     min-width: 10%;
@@ -208,7 +208,7 @@ header{
     margin-left: 20%;
 }
 #volverinicio{
-    margin-top: 7%;
+    margin-top: 8%;
     margin-left: 23%;
     min-height: 20%;
     min-width: 10%;
@@ -220,7 +220,7 @@ header{
     background-repeat: no-repeat;
 }
 #marcador{
-    margin-top: 10%;
+    margin-top: 8%;
     margin-left: 30%;
     position:fixed;
     background-color: slategray;
