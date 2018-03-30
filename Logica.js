@@ -34,6 +34,7 @@ window.onload = function(){
 	pintura=false;
 	cogergoma=false;//para cuando cojamos el lapiz actualizar el color
 	guardar_imagen=false;
+	borrar=false;
 	canvas2=document.getElementById('micanvas2');
 	canvas2.onmousedown=activar;
 	canvas2.onmousemove=dibujar;
@@ -44,6 +45,8 @@ window.onload = function(){
 	lapiz.onclick=pintar;
 	g=document.getElementById('guardar');
 	g.onclick=guardar;
+	b=document.getElementById('borrar_todo');
+	b.onclick=borrar_canvas;
 	init();
 }
 var init = function(){
@@ -146,9 +149,20 @@ function dibujar(event){
 				ctx2.clearRect(posx,posy,tamaño,tamaño);
 			}
 		}
+		if(borrar==true){
+			console.log("borrar1")
+		}
 	}
 }
 //----------FUNCIONES DEL DIBUJO
+function borrar_canvas(){
+	console.log("borrar2");
+	if(canvas2 && canvas2.getContext){
+		ctx2=canvas2.getContext('2d');
+		borrar==true;
+		ctx2.clearRect(0,0,canvas2.getAttribute('width'), canvas2.getAttribute('height'));
+	}
+}
 function activar(){
 	pintura=true;
 }
