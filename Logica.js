@@ -72,7 +72,6 @@ var init = function(){
 		canvas.setAttribute("height", "528");		
 		monigote1 = new monigote();
 		corazon = document.getElementsByClassName("fa fa-heart");
-		
 		ctx = canvas.getContext("2d");
 		document.onkeydown = movimiento_key_down;
 		document.onkeyup = movimiento_key_up;
@@ -260,7 +259,7 @@ var pelota = function(){
 	this.colision_pelota=function(){//tenemos que comprobar con el array porque vamos a tener muchos objetos pelota
 			if(this.pelotax-this.radio <= monigote1.x+monigote1.lado && this.pelotax+this.radio >=monigote1.x 
 				&& this.pelotay-this.radio <= monigote1.y+monigote1.lado && this.pelotay+this.radio >=monigote1.y){
-				alert('HAS COLISIONADO');
+				//alert('HAS COLISIONADO');
 				this.pelotax=0;
 				this.pelotay=0;
 				muerte();
@@ -293,7 +292,7 @@ var bloque = function(){
 			(monigote1.x<=(this.blqx+this.blqlado)) && 
 			(monigote1.y<=(this.blqy+this.blqlado)) && 
 			((monigote1.y+monigote1.lado)>=this.blqy)){
-				alert("COLISIOOOOOOOOOOON");
+				//alert("COLISIOOOOOOOOOOON");
 				no_choca = false;
 				this.blqx= 940; 
 				this.blqy=Math.random()*(180) + 100;
@@ -345,10 +344,16 @@ var diamante = function(){
 	}
 }
 //----------FUNCION MUERTE (2 VIDAS)
-var muerte=function(){
+audio_muerte = new Audio('Mario_Game_Over.mp3');
 
+var muerte=function(){
 	vidas--;
+	sube_salto = false;
+	baja_salto = false;
+	izquierda = false;
+	derecha = false;
 	if(vidas==1){
+		alert("¡Te queda una vida!")
 		console.log('te queda una vida');
 		monigote1.lado=70;
 		monigote1.y = 310; 
@@ -357,7 +362,6 @@ var muerte=function(){
 
 	}else if(vidas==0){
 		console.log('has muerto');
-		audio_muerte = new Audio('Mario_Game_Over.mp3');
 		audio_muerte.play();
 		muerto==true;
 	    select[1].classList.remove('visible');
@@ -388,6 +392,8 @@ var muerte=function(){
 			select[0].classList.remove('invisible');
 			select[0].classList.add('visible');
 			refresh();
+			audio_muerte.load();
+			audio_muerte.pause();
 		}  
 		window.onload();
 	}
@@ -587,24 +593,38 @@ var refresh = function(){
 	segundos = 0;
 	minutos = 0;
 	horas = 0;
-	diams.innerHTML = null;
+	//diams.innerHTML = null;
 	Segundos.innerHTML = ":00";
 	Minutos.innerHTML = ":00";
 	Horas.innerHTML = "00";
 	video.currentTime=0;
+	//si_empezado=false;
 	cronometro_run=false;
 	//para que al refrescar salgan de nuevo los corazones (vidas)
+	vidas = 2; 
 	for(var i=0; i<vidas; i++){
 		corazon[i].classList.remove("invisible");
 		corazon[i].classList.add("visible");
 	}
 	console.log("parar audio");
-	audio_muerte.load();
 	audio_muerte.pause();
+	cancion.load();
+	cancion.play();
+	video.play();
 	window.onload();
 }
 var refresh_muerte = function(){
 	cambiarPag(1);
 	refresh();
-	video.play();
+	audio_muerte.load();
+	audio_muerte.pause();
+	cancion.load();
+	cancion.pause();
+	clearInterval(interval_1);
+	clearInterval(interval_2);
+	clearInterval(interval_3);
+	clearInterval(interval_4);
+	clearInterval(interval_5);
+	reanudar_video();
+	
 }
