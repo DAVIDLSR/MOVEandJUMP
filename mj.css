@@ -172,18 +172,20 @@ header{
     background-repeat: no-repeat;
 }
 #button_refresh_1_muerte {
-    background-color: transparent;
-    margin-top: 8%;
-    margin-left: 33%;
-    min-height: 15%;
-    min-width: 10%;
+    margin-top: 11.5%;
+    margin-left: 0.9%;
+    width: 70px;
+    height: 70px;
     border-color: transparent;
-    background-image: url("logo_refresh_2.png");
+    background-color: transparent;
+    background-image: url(logo_refresh_2.png);
     background-position: center;
     background-size: 70px 70px;
+
     background-repeat: no-repeat;
 }
 #button_refresh_2 {
+
     margin-top: 0.5%;
     min-height: 10%;
     min-width: 5%;
@@ -208,20 +210,21 @@ header{
     margin-left: 20%;
 }
 #volverinicio{
-    margin-top: 8%;
-    margin-left: 23%;
-    min-height: 20%;
-    min-width: 10%;
+    margin-top: 11.5%;
+    margin-left: 27%;
+    width: 70px;
+    height: 70px;
     border-color: transparent;
-    background-image: url('volver_inicio_2.png');
     background-color: transparent;
+    background-image: url(volver_inicio_2.png);
     background-position: center;
     background-size: 70px 70px;
+
     background-repeat: no-repeat;
 }
 #marcador{
     margin-top: 8%;
-    margin-left: 30%;
+    margin-left: 35%;
     position:fixed;
     background-color: slategray;
     font-family: courier new; 
