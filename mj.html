@@ -89,13 +89,101 @@
       </div>
       <canvas id="micanvas2" height="200" width="300"/>
     </div>
+    <div id="nota">NOTA: Haga el dibujo lo mas extenso y llamativo posible, luego su tamaño se reducirá.</div>
   </section>
  <!--INSTRUCCIONES-->
   <section id="Informacion" class="invisible">
     <div id="cuadro">
       <h1 class="hh1"> SOBRE EL JUEGO </h1>
+      <h2>Desarrollo</h2>
+        <h3>Responsabilidades</h3>
+          <ul>
+            <li>Menú inicial y disposición gráfica del juego: María Iñigo Romillo</li>
+            <li>“Dibuja tu personaje”: David López San Román</li>
+            <li>"Juego</li>
+              <ul>
+                <li><span class="negrita">Movimientos con respuesta al teclado, eventos en el juego, interfaz gráfica del juego, lógica del juego:</span> María Ortega Mazo, Andrés Gómez del Río.</li>
+                <li><span class="negrita">Lógica del juego asociado con la página web (botones de reinicio, cambio de pestañas,…):</span> María Iñigo Romillo, María Ortega Mazo, David López San Román, Andrés Gómez del Río.</li>
+                <li><span class="negrita">Evento multimedia (Anuncio integrado):</span> David López San Román.</li>
+              </ul>
+          </ul>
+        <h3>Técnicas y tecnologías de la asignatura aplicadas al proyecto:</h3>
+          <ul>
+            <li><span class="negrita">Orientación a Objetos: </span>Trabajamos con varios Objetos en nuestro código para hacer la lógica de este más versátil.</li>
+            <li><span class="negrita">Procesamiento multimedia: </span>Incluimos un video de background sobre el que generaremos nuestro canvas en el que se jugará, y sobre nuestro juego incluimos tanto eventos multimedia creados por eventos de teclado o del juego (como sonidos, imágenes,…) como eventos multimedia creados a partir del propio video de background, por ejemplo un anuncio cada cierto tiempo.</li>
+            <li><span class="negrita">Elementos gráficos y animaciones: </span>Es posiblemente el recurso más utilizado en nuestro juego, desde nuestro fondo de pantalla generado por el equipo hasta los canvas utilizados tanto en el “juego”, como en el “Dibuja tu personaje”.</li>
+            <li><span class="negrita">Interacción con el usuario: </span>Lo conseguimos a partir de distintos eventos de teclado o de ratón (como por ejemplo detectar cuál de las flechas pulsamos o dejamos de pulsar para detectar el movimiento de nuestro personaje, o bien pulsar la barra espaciadora para parar el juego, pulsar algún botón requerido en pantalla,…).</li>
+            <li><span class="negrita">Procesamiento DOM: </span>Manipulamos varias veces los elementos DOM de nuestra página (ej: Cuando cambiamos de pestaña y así convertimos la seleccionada en visible y el resto en invisible).</li>
+          </ul>
+        <h3>Principales problemas y dificultades encontrados (y la solución aplicada):</h3>
+          <ul>
+            <li><span class="negrita">En "Juego": </span></li>
+              <ul>
+                <li>Tamaño polivalente para distintos tamaños de ventana (Lo solucionamos aplicando distintos bloques div que servirían de contenedores para distintos objetos, unos encima de otros, utilizando la posición fixed y porcentajes en el css sobre ellos).</li>
+                <li>Cambiar a otra pestaña una vez iniciado o acabado el juego (Lo solucionamos revisando y tratando correctamente a las clases visible o invisible de cada una de las pestañas).</li>
+              </ul>
+            <li><span class="negrita">En "Dibuja tu personaje"</span></li>
+              <ul>
+                <li>Convertir en imagen el canvas dibujado en formato imagen para poder jugar con nuestro propio personaje (Lo solucionamos buscando información en internet en distintas páginas, como por ejemplo “w3school" y gracias a la ayuda de los docentes en las clases prácticas y teóricas).</li>
+              </ul>
+          </ul>
+        <h3>Puntos fuertes del proyecto:</h3>
+          <ul>
+            <li>Utilización de distintos contenedores “div” para almacenar las distintas capas dentro del juego y así conseguir una mejor forma de interactuar con el usuario.</li>
+            <li>La facilidad de captar eventos de teclado a la hora de jugar al juego que permiten un buen manejo de nuestro personaje, o la posibilidad de parar el juego o reiniciarlo en el momento que se nos antoje.</li>
+            <li>Los contadores de puntos y el cronometro que nos ayudaran a controlar nuestras puntuaciones.</li>
+            <li>Los efectos multimedia, donde cabe diferenciar:</li>
+              <ul>
+                <li>Los creados por eventos de teclado o por eventos ocasionales en el propio juego (coger diamante, muerte,…)</li>
+                <li>Los anuncios que aparecerán sobre nuestro juego periódicamente.</li>
+              </ul>
+            <li>Las funciones random aplicadas a los obstáculos que van apareciendo de forma aleatoria en nuestro juego. Así como la detección de las colisiones contra estos objetos y los eventos multimedia que esto crea (ralentización de nuestro personaje,  aumento de su tamaño, pérdida de vidas,…).</li>
+            <li>La posibilidad de que te puedas crear tu propio personaje para jugar con este.</li>
+            <li>El juego de pestañas de nuestro Menú principal que gracias a su interfaz sencillo y eficaz permiten facilitar el modo de juego al usuario.</li>
+          </ul>
+        <h3> Planificación</h3>
+          <ul>
+            <li>Inicial:</li> 
+              <ul>
+                <li><span class="negrita">Menú Principal:</span> 2 días</li>
+                <li><span class="negrita">"Dibuja tu personaje":</span> 3 días</li>
+                <li><span class="negrita">"Juego"</span></li>
+                  <ul>
+                    <li>html y css: 1 semana</li>
+                    <li>Lógica: 2 semanas</li>
+                  </ul>
+              </ul>
+            <li>Real:</li>
+              <ul>
+                <li><span class="negrita">Menú Principal:</span> 5 semanas</li>
+                  <li><span class="negrita">"Dibuja tu personaje":</span> 1 semana</li>
+                  <li><span class="negrita">"Juego"</span></li>
+                    <ul>
+                      <li>html y css: 2 semanas</li>
+                      <li>Lógica: 3 semanas</li>
+                    </ul>
+              </ul>
+          </ul>
+      <h2>Referencias</h2>
+        <ul>
+          <li>Referencias de internet</li>
+            <ul>
+              <li><a href="https://www.w3schools.com">W3 Schools</a></li>
+              <li><a href="https://stackoverflow.com">Stack Overflow</a></li>
+              <li><a href="https://www.youtube.com">Youtube</a></li>
+              <li>Aula Global: Diapositivas, laboratorios practicados, ...</li>
+              <li>Otras páginas webs, ...</li>
+            </ul>
+          <li>Docentes de la asignatura de Aplicaciones Multimedia de la Universidad Carlos III de Madrid</li>
+        </ul>
       <h3> Instrucciones </h3>
-      <p> En este juego deberas esquivar los objetos que caen. Para ello puedes saltar y moverte ayudandote de los siguientes controles:</p>
+      <p> En este juego deberas esquivar los objetos que caen y a su vez recopilar diamantes que te darán puntos. Para ello puedes saltar y moverte ayudandote de los siguientes controles:
+        <ul>
+          <li><span class="negrita">Flechas:</span> movimiento lateral (derecha e izquierda), salto y bajar salto</li>
+          <li><span class="negrita">Barra espaciadora:</span> parar el video </li>
+          <li><span class="negrita">NOTA: Al dejar pulsadas una flecha lateral y la de salto o bajada el desplazamiento será diagonal</span></li>
+        </ul>
+      </p>
     </div>
   </section>
 </body>
