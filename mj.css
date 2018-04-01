@@ -6,6 +6,7 @@ body{
     background-size: cover;
     color:white;
 }
+
 /**************************** PRINCIPAL ****************************/
 header{
     font-size:60pt;
@@ -14,18 +15,25 @@ header{
     top:30%;
     right:15%;
 }
+
 /************************** INFORMACION **************************/
 #cuadro{
-    background-color:rgba(255, 255, 255, 0.7);
+    background-color:rgba(255, 255, 255, 0.85);
     position:absolute;
+    padding: 5%;
     top:20%;
     right:12%;
     width:1000px;
     color:black;
+    font-family: "Georgia", Times, serif;
 }
 #cuadro.hh1{
    margin:auto;
 }
+.negrita {
+    font-weight: bold; 
+}
+
 /***************************** JUEGO *****************************/
 .vidas{
     display: inline-block;
@@ -60,25 +68,6 @@ header{
     font-family: Courier,sans-serif;
     color: white;
 }
-.boton{
-    outline: none;
-    border: 1px solid #363431;
-    color: white;
-    width: 128px;
-    height: 30px;
-    text-shadow: 0px -1px 1px black;
-    font-size: 20px;
-    border-radius: 5px;
-    font-family: Helvetica;
-    cursor: pointer;
-    background-image: linear-gradient(#3aad02,#2c6f05);
-}
-.boton:active{
-    background-image: linear-gradient(#2c6f05,#3aad02);
-}
-.boton:hover{
-    box-shadow: 0px 0px 14px #3aad02;
-}
 #anuncio{
     margin-top: 10%;
     position:fixed;
@@ -94,7 +83,6 @@ header{
     width: 940px;
 }
 #vd_container{
-    /*background-color: grey;*/
     margin-top: 10%;
     position:fixed;
     height: 528px;
@@ -107,10 +95,6 @@ header{
 #mivideo{
     height: 528px;
     width: 940px;
-    /*min-width: 100%;/*Defines the minimum width in percent of the containing block, en este caso, 600x900*/
-   /* min-height: 100%;
-    /*width: 100%;
-    height: 100%;*/
 }
 #content{
     margin-top: 10%;
@@ -123,7 +107,6 @@ header{
     z-index: -10;
 }
 #micanvas {
-    /*min-width: 70%;/*Defines the minimum width in percent of the containing block, en este caso, 600x900*/
     min-height: 95.5%;
     width: 940;
     height: 100%;
@@ -171,21 +154,7 @@ header{
     background-size: 120px 120px;
     background-repeat: no-repeat;
 }
-#button_refresh_1_muerte {
-    margin-top: 11.5%;
-    margin-left: 0.9%;
-    width: 70px;
-    height: 70px;
-    border-color: transparent;
-    background-color: transparent;
-    background-image: url(logo_refresh_2.png);
-    background-position: center;
-    background-size: 70px 70px;
-
-    background-repeat: no-repeat;
-}
 #button_refresh_2 {
-
     margin-top: 0.5%;
     min-height: 10%;
     min-width: 5%;
@@ -194,6 +163,18 @@ header{
     border-color: transparent;
     background-position: center;
     background-size: 50px 50px;
+    background-repeat: no-repeat;
+}
+#button_refresh_1_muerte {
+    margin-top: 12.5%;
+    margin-left: 0.9%;
+    width: 70px;
+    height: 70px;
+    border-color: transparent;
+    background-color: transparent;
+    background-image: url(logo_refresh_2.png);
+    background-position: center;
+    background-size: 70px 70px;
     background-repeat: no-repeat;
 }
 #muerte{
@@ -210,8 +191,8 @@ header{
     margin-left: 20%;
 }
 #volverinicio{
-    margin-top: 11.5%;
-    margin-left: 27%;
+    margin-top: 12.5%;
+    margin-left: 30%;
     width: 70px;
     height: 70px;
     border-color: transparent;
@@ -219,12 +200,11 @@ header{
     background-image: url(volver_inicio_2.png);
     background-position: center;
     background-size: 70px 70px;
-
     background-repeat: no-repeat;
 }
 #marcador{
-    margin-top: 8%;
-    margin-left: 35%;
+    margin-top: 9%;
+    margin-left: 40%;
     position:fixed;
     background-color: slategray;
     font-family: courier new; 
@@ -234,6 +214,7 @@ header{
     color: tomato;
     border: dotted 2px red;
 }
+
 /****************************** MENU ******************************/
 #contenedor{
     width:300px;
@@ -267,19 +248,14 @@ header{
 }
 .menu:hover .menu-contenido {
     display:block;
-}/*
-.menu:hover .boton { 
-    color:black;
- }
-.menu:hover .dropdown {
-    background-color:black;
-}*/
+}
 .visible{
     display:block;
 }
 .invisible{
     display:none;
 }
+
 /****************************** PIE PAGINA ******************************/
 footer {
     color:white;
@@ -294,6 +270,7 @@ footer a:link {
   position:absolute;
   left:40%;
 }
+
 /****************************** DIBUJO ******************************/
 #micanvas2{
     border:solid;
@@ -311,4 +288,14 @@ footer a:link {
 }
 #dibujocanvas p{
     color:white;
+}
+#nota{
+    background-color:rgba(50, 220, 50, 0.7);
+    position:absolute;
+    padding: 2%;
+    top:80%;
+    left:20%;
+    width:500px;
+    color:white;
+    font-family: "Georgia", Times, serif;
 }
